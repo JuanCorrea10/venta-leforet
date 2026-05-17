@@ -1,0 +1,25 @@
+# Archivos del sistema operativo (Windows / Mac)
+Thumbs.db
+ehthumbs.db
+desktop.ini
+.DS_Store
+
+# Configuración local del editor
+.vscode/
+.idea/
+
+# Logs y backups
+*.log
+*.bak
+*.tmp
+*~
+
+# Carpetas de dependencias (por si más adelante usamos npm)
+node_modules/
+dist/
+build/
+
+# Archivos sensibles (nunca subir contraseñas, claves API, etc.)
+.env
+.env.local
+*.secret

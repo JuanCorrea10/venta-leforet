@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<!--
+  DOCTYPE le dice al navegador "esto es HTML5".
+  Sin esto algunos navegadores entran en "modo raro" (quirks mode)
+  y la página se ve distinta. Siempre va arriba de todo.
+-->
+<html lang="es">
+<!--
+  lang="es" indica que el contenido está en español.
+  Sirve para: corrector ortográfico, lectores de pantalla,
+  traductores automáticos del navegador, y SEO.
+-->
+
+<head>
+  <!--
+    El <head> NO se muestra al usuario.
+    Es info "técnica" para el navegador y buscadores como Google.
+  -->
+
+  <!-- charset UTF-8: permite usar acentos, ñ, emojis. SIEMPRE va primero. -->
+  <meta charset="UTF-8">
+
+  <!--
+    viewport: hace que la página se adapte a pantallas pequeñas (celulares).
+    Sin esto, en un celular se vería como una mini-versión zoom-out.
+  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!--
+    description: el texto que Google muestra debajo del título cuando
+    aparece tu página en los resultados de búsqueda. Máx ~155 caracteres.
+  -->
+  <meta name="description" content="Apartamento 1605 en Leforet El Vergel, Ibagué. Esquinero, 3 habitaciones, 167 m², piso 16, vista a montaña y ciudad. Estrato 6.">
+
+  <!-- El título de la pestaña del navegador y el título principal en Google. -->
+  <title>Apartamento 1605 — Leforet El Vergel | Venta en Ibagué</title>
+
+  <!--
+    Google Fonts. Cargamos dos familias:
+    - Fraunces: serif moderno y expresivo para titulares.
+    - Manrope: sans humanista limpio para el cuerpo.
+    preconnect = "decile al navegador que se prepare a hablar con este server".
+    Ahorra ~100ms en la carga de fuentes.
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Manrope:wght@300..800&display=swap" rel="stylesheet">
+
+  <!-- Nuestra hoja de estilos. -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+  <!--
+    El <body> es lo que SÍ ve el usuario.
+  -->
+
+  <!--
+    HEADER: cabecera de la página. Nombre del producto, ubicación rápida.
+    En este caso no hay menú de navegación porque la página es de UNA sola
+    pantalla larga (no hay más páginas a las que ir).
+  -->
+  <header>
+    <p>Venta de apartamento</p>
+    <h1>Leforet El Vergel · Apto 1605</h1>
+    <p>Ibagué, Tolima — Sector El Vergel</p>
+  </header>
+
+  <!--
+    <main>: el contenido principal de la página.
+    Solo debe haber UN <main> por página. Es semántica para Google y
+    lectores de pantalla: "esto es lo importante".
+  -->
+  <main>
+
+    <!-- ============================================================
+         SECCIÓN 1: HERO
+         "Hero" en diseño web = la primera sección grande que se ve al
+         entrar. La más impactante. Va la foto principal y el precio.
+         ============================================================ -->
+    <section id="hero" aria-labelledby="hero-titulo">
+      <img src="assets/images/fachada-render.png"
+           alt="Render arquitectónico del edificio Leforet El Vergel">
+      <!--
+        El "alt" describe la imagen. Es OBLIGATORIO:
+        - Si la imagen no carga, se muestra el alt.
+        - Los lectores de pantalla (para personas ciegas) leen el alt.
+        - Google usa el alt para entender de qué es la imagen.
+      -->
+
+      <div>
+        <h2 id="hero-titulo">Apartamento esquinero de 167,45 m²</h2>
+        <p>3 habitaciones · 2,5 baños · Piso 16</p>
+        <p><strong>$1.265.610.500 COP</strong></p>
+        <p>Negociable según propuesta económica</p>
+        <a href="#contacto">Contactar a la vendedora</a>
+        <!--
+          href="#contacto" es un "enlace ancla": al hacer click
+          la página baja sola hasta el id="contacto" de más abajo.
+        -->
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECCIÓN 2: CARACTERÍSTICAS PRINCIPALES
+         Tarjetas con los datos clave. La gente que busca apto escanea
+         estos números antes que cualquier otra cosa.
+         ============================================================ -->
+    <section id="caracteristicas" aria-labelledby="caract-titulo">
+      <h2 id="caract-titulo">Características</h2>
+      <ul>
+        <li><strong>3</strong> habitaciones</li>
+        <li><strong>2,5</strong> baños</li>
+        <li><strong>167,45 m²</strong> de área</li>
+        <li><strong>Piso 16</strong></li>
+        <li><strong>Esquinero</strong> — doble vista</li>
+        <li><strong>2</strong> balcones</li>
+        <li><strong>1</strong> garaje</li>
+        <li><strong>1</strong> depósito</li>
+        <li><strong>Estrato 6</strong></li>
+        <li><strong>Acabados</strong> incluidos</li>
+      </ul>
+    </section>
+
+    <!-- ============================================================
+         SECCIÓN 3: VISTA DOBLE
+         Esta sección es el "argumento ganador" del apto.
+         Le damos protagonismo propio.
+         ============================================================ -->
+    <section id="vistas" aria-labelledby="vistas-titulo">
+      <h2 id="vistas-titulo">Vista doble — privilegio de ser esquinero</h2>
+      <div>
+        <h3>Zona social</h3>
+        <p>Sala, comedor y balcones con vista a la <strong>montaña</strong>.</p>
+      </div>
+      <div>
+        <h3>Habitaciones</h3>
+        <p>Vista a la <strong>ciudad</strong>, sector El Vergel.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECCIÓN 4: GALERÍA
+         Las fotos del apto modelo del proyecto. Avisamos que son
+         de referencia porque el 1605 está en obra.
+         ============================================================ -->
+    <section id="galeria" aria-labelledby="galeria-titulo">
+      <h2 id="galeria-titulo">Galería</h2>
+      <p>
+        <em>Imágenes del apartamento modelo del proyecto, a modo de referencia
+        visual. El 1605 se entrega con acabados sin amoblar.</em>
+      </p>
+
+      <!--
+        <figure> + <figcaption> es la forma semántica de mostrar
+        "imagen con leyenda". Mejor que un <div> + <p>.
+      -->
+      <figure>
+        <img src="assets/images/sala-principal-1.jpeg"
+             alt="Sala principal del apartamento modelo con sofás beige y cuadros abstractos">
+        <figcaption>Sala principal</figcaption>
+      </figure>
+
+      <figure>
+        <img src="assets/images/comedor.jpeg"
+             alt="Comedor con mesa de vidrio y sillas turquesa">
+        <figcaption>Comedor</figcaption>
+      </figure>
+
+      <figure>
+        <img src="assets/images/cocina.jpeg"
+             alt="Cocina del apartamento modelo">
+        <figcaption>Cocina</figcaption>
+      </figure>
+
+      <figure>
+        <img src="assets/images/sala-tv-sofa.jpeg"
+             alt="Sala de televisión con sofá café">
+        <figcaption>Sala de TV</figcaption>
+      </figure>
+
+      <figure>
+        <img src="assets/images/mueble-divisor-tv.jpeg"
+             alt="Mueble divisor con televisor entre sala y comedor">
+        <figcaption>Mueble divisor</figcaption>
+      </figure>
+
+      <figure>
+        <img src="assets/images/dormitorio-principal.jpeg"
+             alt="Dormitorio principal con cama doble y decoración">
+        <figcaption>Habitación principal</figcaption>
+      </figure>
+
+      <figure>
+        <img src="assets/images/bano-social.jpeg"
+             alt="Baño con lavamanos cuadrado y espejo">
+        <figcaption>Baño</figcaption>
+      </figure>
+
+      <figure>
+        <img src="assets/images/estudio-decoracion.jpeg"
+             alt="Rincón de escritorio con silla y cuadro decorativo">
+        <figcaption>Espacio de estudio</figcaption>
+      </figure>
+
+      <figure>
+        <img src="assets/images/fachada-construccion.jpeg"
+             alt="Edificio Leforet El Vergel en construcción, foto del 30 de abril de 2026">
+        <figcaption>Edificio en construcción (abril 2026)</figcaption>
+      </figure>
+    </section>
+
+    <!-- ============================================================
+         SECCIÓN 5: PLANO DE DISTRIBUCIÓN
+         La imagen del plano oficial. Sección separada porque es info
+         técnica que el comprador quiere ver bien grande.
+         ============================================================ -->
+    <section id="plano" aria-labelledby="plano-titulo">
+      <h2 id="plano-titulo">Plano de distribución</h2>
+      <img src="assets/images/plano-distribucion.jpeg"
+           alt="Plano del apartamento 1605 mostrando distribución de 3 habitaciones, 2.5 baños, sala, comedor, cocina y terraza">
+    </section>
+
+    <!-- ============================================================
+         SECCIÓN 6: ZONAS COMUNES DEL EDIFICIO
+         Lo que el comprador "compra de más" al vivir en este edificio.
+         ============================================================ -->
+    <section id="zonas-comunes" aria-labelledby="zonas-titulo">
+      <h2 id="zonas-titulo">Zonas comunes del edificio</h2>
+      <ul>
+        <li>Lobby tipo hotel</li>
+        <li>Piscina para adultos</li>
+        <li>Piscina para niños</li>
+        <li>Jacuzzi</li>
+        <li>Gimnasio</li>
+        <li>Sauna</li>
+        <li>Wellness Center</li>
+        <li>Business Center</li>
+        <li>Sky Garden en el piso 17 con jaulas de golf y yoga deck</li>
+        <li>2 ascensores</li>
+      </ul>
+    </section>
+
+    <!-- ============================================================
+         SECCIÓN 7: UBICACIÓN
+         Dirección + mapa de Google Maps embebido.
+         ============================================================ -->
+    <section id="ubicacion" aria-labelledby="ubicacion-titulo">
+      <h2 id="ubicacion-titulo">Ubicación</h2>
+      <p>Carrera 16 #67-170, Ibagué, Tolima (Colombia)</p>
+
+      <!--
+        <iframe> permite incrustar otra página web dentro de la tuya.
+        Aquí incrustamos un mapa de Google Maps centrado en la dirección.
+        loading="lazy" = no carga el mapa hasta que el usuario haga scroll
+        hasta él. Ahorra datos y hace la página más rápida.
+      -->
+      <iframe
+        title="Mapa de ubicación del apartamento"
+        src="https://www.google.com/maps?q=Carrera+16+%2367-170,+Iba%C3%ABgu%C3%A9,+Tolima&output=embed"
+        width="100%"
+        height="400"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </section>
+
+    <!-- ============================================================
+         SECCIÓN 8: CONTACTO
+         Lo más importante: que el interesado pueda comunicarse fácil.
+         WhatsApp prioritario, email como respaldo.
+         ============================================================ -->
+    <section id="contacto" aria-labelledby="contacto-titulo">
+      <h2 id="contacto-titulo">¿Te interesa? Contactanos</h2>
+      <p>Vendedora: <strong>Liliana Sánchez</strong></p>
+
+      <!--
+        TRUCO DE WHATSAPP:
+        Un link a "https://wa.me/NUMERO" abre WhatsApp con ese contacto.
+        El número va con código de país SIN +, SIN espacios, SIN guiones.
+        Colombia = 57, entonces 3184095180 queda como 573184095180.
+
+        El parámetro ?text= permite pre-llenar el mensaje. Lo codificamos
+        con %20 para los espacios y %C3%B3 para la ó (URL encoding).
+      -->
+      <a href="https://wa.me/573184095180?text=Hola%2C%20vi%20el%20apartamento%201605%20del%20Leforet%20y%20me%20interesa%20obtener%20m%C3%A1s%20informaci%C3%B3n.">
+        Escribir por WhatsApp
+      </a>
+
+      <!--
+        mailto: abre el cliente de correo del usuario con el destinatario
+        ya cargado. Le ponemos asunto pre-armado con ?subject=
+      -->
+      <a href="mailto:teita79@gmail.com?subject=Consulta%20por%20apartamento%201605%20Leforet">
+        Enviar correo
+      </a>
+    </section>
+  </main>
+
+  <!-- ============================================================
+       FOOTER: pie de página. Info chica, complementaria.
+       ============================================================ -->
+  <footer>
+    <p>Apartamento 1605 · Edificio Leforet El Vergel · Ibagué, Tolima</p>
+    <p>
+      Proyecto en construcción ·
+      <a href="https://www.leforetelvergel.com/" target="_blank" rel="noopener">
+        Web oficial del proyecto
+      </a>
+    </p>
+    <p><small>Página creada en 2026</small></p>
+    <!--
+      target="_blank" = abre el link en una pestaña nueva.
+      rel="noopener" es OBLIGATORIO con target="_blank" por seguridad:
+      sin esto, la página externa podría manipular nuestra pestaña.
+    -->
+  </footer>
+
+  <!-- ============================================================
+       BOTÓN FLOTANTE DE WHATSAPP
+       Está fuera del <main> a propósito: es un elemento "global"
+       que siempre se ve, mientras el usuario hace scroll por la página.
+       Por ahora es un link normal; en Fase 3 lo posicionamos abajo-derecha
+       con CSS y le damos forma de botón redondo verde.
+       ============================================================ -->
+  <a href="https://wa.me/573184095180?text=Hola%2C%20vi%20el%20apartamento%201605%20del%20Leforet%20y%20me%20interesa%20obtener%20m%C3%A1s%20informaci%C3%B3n."
+     class="whatsapp-flotante"
+     aria-label="Escribir por WhatsApp (botón flotante)">
+    WhatsApp
+  </a>
+</body>
+</html>
