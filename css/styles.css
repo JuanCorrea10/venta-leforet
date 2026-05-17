@@ -613,8 +613,9 @@ body > header > p:last-child {
   grid-template-columns: repeat(4, 1fr);
   gap: 1px;                       /* el "gap" sirve como divisor */
   background: var(--hairline);    /* el fondo del gap se ve oscuro */
-  border-top: 1px solid var(--hairline);
   border-bottom: 1px solid var(--hairline);
+  margin-top: var(--s-3);
+  /* Sin border-top: el h2 ya tiene border-bottom, no necesitamos dos hairlines */
 }
 
 #caracteristicas li {
@@ -650,16 +651,16 @@ body > header > p:last-child {
   text-transform: none;
 }
 
-/* Cards destacadas — área y esquinero ocupan 2 columnas */
+/* Cards destacadas — área (pos 3) y esquinero (pos 6) ocupan 2 columnas */
 #caracteristicas li:nth-child(3),
-#caracteristicas li:nth-child(5) {
+#caracteristicas li:nth-child(6) {
   grid-column: span 2;
   background: var(--ink);
   color: var(--paper-cool);
 }
 
 #caracteristicas li:nth-child(3) strong,
-#caracteristicas li:nth-child(5) strong {
+#caracteristicas li:nth-child(6) strong {
   color: var(--paper);
   font-style: italic;
   font-variation-settings: 'opsz' 144, 'SOFT' 80;
@@ -667,7 +668,7 @@ body > header > p:last-child {
 }
 
 #caracteristicas li:nth-child(3):hover,
-#caracteristicas li:nth-child(5):hover {
+#caracteristicas li:nth-child(6):hover {
   background: var(--terracotta-d);
 }
 
@@ -1545,7 +1546,7 @@ body > footer {
     grid-template-columns: repeat(2, 1fr);
   }
   #caracteristicas li:nth-child(3),
-  #caracteristicas li:nth-child(5) {
+  #caracteristicas li:nth-child(6) {
     grid-column: span 2;
   }
 
@@ -1679,7 +1680,7 @@ body > footer {
   }
   /* Las destacadas ocupan toda la fila */
   #caracteristicas li:nth-child(3),
-  #caracteristicas li:nth-child(5) {
+  #caracteristicas li:nth-child(6) {
     grid-column: 1 / -1;
     text-align: center;
     align-items: center;
@@ -1687,7 +1688,7 @@ body > footer {
     min-height: 130px;
   }
   #caracteristicas li:nth-child(3) strong,
-  #caracteristicas li:nth-child(5) strong {
+  #caracteristicas li:nth-child(6) strong {
     font-size: 2.4rem;
   }
 
