@@ -955,29 +955,31 @@ body > header > p:last-child {
 }
 
 /*
-  LIGHTBOX — modal a pantalla completa.
-  Se muestra cuando la URL contiene su id como anchor.
-  La pseudo-clase :target detecta esto. Es CSS puro, sin JavaScript.
+  LIGHTBOX — modal a pantalla completa controlado por JavaScript.
+  Antes usaba :target (CSS-only), pero eso cambiaba la URL y al cerrar
+  el navegador hacía scroll al inicio. Ahora lo controla main.js con
+  la clase .open. URL nunca cambia, scroll preservado.
 */
 .lightbox {
   position: fixed;
   inset: 0;
   z-index: 200;
-  display: none;
-  background: rgba(22, 19, 16, 0.96);
-  padding: var(--s-5);
+  display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(22, 19, 16, 0.96);
+  padding: var(--s-5);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease-out-quart),
+              visibility 0.3s var(--ease-out-quart);
 }
 
-.lightbox:target {
-  display: flex;
-  animation: lightboxIn 0.3s var(--ease-out-quart) both;
-}
-
-@keyframes lightboxIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+.lightbox.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 /* Backdrop clickeable que cierra el modal */

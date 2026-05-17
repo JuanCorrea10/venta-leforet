@@ -134,7 +134,48 @@ if (whatsappBtn && contactoSection) {
 
 
 /* ============================================================
-   5 · GALERÍA LIGHTBOX
+   5 · PLANO LIGHTBOX
+   ------------------------------------------------------------
+   Antes el plano se abría/cerraba con CSS :target (URL anchor),
+   pero al cerrar el navegador hacía scroll al inicio. Ahora lo
+   controlamos con JS — la URL nunca cambia, el scroll se preserva.
+   ============================================================ */
+const planoTrigger = document.querySelector('.plano-trigger');
+const planoLightbox = document.getElementById('plano-zoom');
+
+if (planoTrigger && planoLightbox) {
+  const planoBackdrop = planoLightbox.querySelector('.lightbox-backdrop');
+  const planoClose = planoLightbox.querySelector('.lightbox-close');
+
+  function openPlano(e) {
+    if (e) e.preventDefault();      // evita que el navegador navegue al anchor
+    planoLightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    lenis.stop();
+  }
+
+  function closePlano(e) {
+    if (e) e.preventDefault();
+    planoLightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    lenis.start();
+  }
+
+  planoTrigger.addEventListener('click', openPlano);
+  planoBackdrop.addEventListener('click', closePlano);
+  planoClose.addEventListener('click', closePlano);
+
+  // ESC cierra
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && planoLightbox.classList.contains('open')) {
+      closePlano();
+    }
+  });
+}
+
+
+/* ============================================================
+   6 · GALERÍA LIGHTBOX
    ------------------------------------------------------------
    Click en una foto → se abre en pantalla completa.
    Flechas ← → o botones para navegar entre fotos.

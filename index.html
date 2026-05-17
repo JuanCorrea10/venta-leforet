@@ -102,7 +102,7 @@
         <!-- Bloque superior: eyebrow del proyecto + tag de entrega -->
         <div class="hero-top">
           <p class="hero-eyebrow">Leforet El Vergel · 1605</p>
-          <span class="hero-tag">Entrega 2026</span>
+          <span class="hero-tag">Entrega inmediata</span>
         </div>
 
         <!-- Bloque inferior: lo más importante para enganchar -->
@@ -507,24 +507,23 @@
   </div>
 
   <!-- ============================================================
-       SCRIPTS
-       Lenis: librería de scroll suave (~5KB). Da sensación premium
-       como en sitios de edificios de lujo.
-       ============================================================ -->
-  <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
-  <script src="js/main.js"></script>
-
-  <!-- ============================================================
        BOTÓN FLOTANTE DE WHATSAPP
        Está fuera del <main> a propósito: es un elemento "global"
        que siempre se ve, mientras el usuario hace scroll por la página.
-       Por ahora es un link normal; en Fase 3 lo posicionamos abajo-derecha
-       con CSS y le damos forma de botón redondo verde.
+       Va ANTES de los scripts para que el JS lo encuentre en el DOM.
        ============================================================ -->
   <a href="https://wa.me/573184095180?text=Hola%2C%20vi%20el%20apartamento%201605%20del%20Leforet%20y%20me%20interesa%20obtener%20m%C3%A1s%20informaci%C3%B3n."
      class="whatsapp-flotante"
      aria-label="Escribir por WhatsApp (botón flotante)">
     WhatsApp
   </a>
+
+  <!-- ============================================================
+       SCRIPTS — al final del body para que TODO el DOM ya esté creado
+       cuando el JS empiece a buscar elementos con querySelector.
+       Lenis: librería de scroll suave (~5KB).
+       ============================================================ -->
+  <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
