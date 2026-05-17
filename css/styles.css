@@ -1745,7 +1745,210 @@ body > footer {
 
 
 /* ============================================================
-   18 · MODO REDUCIDO DE MOVIMIENTO
+   18 · BARRA DE PROGRESO DE SCROLL
+   ------------------------------------------------------------
+   Línea fina brass arriba que se va llenando a medida que bajás.
+   El ancho se controla con JS via la CSS custom property --progress.
+   ============================================================ */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  z-index: 150;
+  pointer-events: none;
+}
+
+.scroll-progress::after {
+  content: '';
+  display: block;
+  width: var(--progress, 0%);     /* default 0%, JS lo actualiza */
+  height: 100%;
+  background: linear-gradient(90deg, var(--brass), var(--terracotta));
+  transition: width 0.1s linear;
+}
+
+
+/* ============================================================
+   19 · GALERÍA LIGHTBOX (modal con navegación)
+   ------------------------------------------------------------
+   Modal a pantalla completa con flechas prev/next.
+   Manejado 100% por JavaScript.
+   ============================================================ */
+.gallery-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(2rem, 5vw, 4rem);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.35s var(--ease-out-quart),
+              visibility 0.35s var(--ease-out-quart);
+}
+
+.gallery-lightbox.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.gallery-lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(22, 19, 16, 0.96);
+  cursor: zoom-out;
+}
+
+/* La "escena" donde vive la imagen */
+.gallery-lightbox-stage {
+  position: relative;
+  z-index: 2;
+  max-width: 90vw;
+  max-height: 85vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-4);
+  pointer-events: none;            /* dejamos pasar clicks al backdrop salvo en la imagen */
+}
+
+.gallery-lightbox-img {
+  max-width: 100%;
+  max-height: 75vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+  pointer-events: auto;
+  background: var(--ink);
+  transition: opacity 0.25s ease;
+}
+
+.gallery-lightbox-img.swapping {
+  opacity: 0;
+}
+
+.gallery-lightbox-meta {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-5);
+  pointer-events: auto;
+  font-family: var(--font-body);
+  color: var(--paper);
+  text-align: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.gallery-lightbox-counter {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--brass);
+  font-feature-settings: 'tnum' on;
+}
+
+.gallery-lightbox-caption {
+  font-family: var(--font-display);
+  font-size: var(--t-md);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--paper-cool);
+  font-variation-settings: 'opsz' 30;
+}
+
+/* Botón de cerrar y flechas — estilo consistente */
+.gallery-lightbox-close,
+.gallery-lightbox-nav {
+  position: absolute;
+  z-index: 3;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(239, 234, 224, 0.08);
+  border: 1px solid rgba(239, 234, 224, 0.2);
+  border-radius: 50%;
+  color: var(--paper);
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+  font: inherit;
+}
+
+.gallery-lightbox-close:hover {
+  background: rgba(239, 234, 224, 0.25);
+  transform: rotate(90deg);
+}
+
+.gallery-lightbox-nav:hover {
+  background: var(--brass);
+  border-color: var(--brass);
+  color: var(--ink);
+}
+
+.gallery-lightbox-close {
+  top: clamp(1rem, 3vw, 1.5rem);
+  right: clamp(1rem, 3vw, 1.5rem);
+}
+
+.gallery-lightbox-prev {
+  left: clamp(0.75rem, 3vw, 2rem);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.gallery-lightbox-prev:hover {
+  transform: translateY(-50%) translateX(-3px);
+}
+
+.gallery-lightbox-next {
+  right: clamp(0.75rem, 3vw, 2rem);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.gallery-lightbox-next:hover {
+  transform: translateY(-50%) translateX(3px);
+}
+
+/* Click en las fotos de la galería = cursor zoom-in */
+#galeria figure {
+  cursor: zoom-in;
+}
+
+/* WhatsApp flotante: clase para esconderlo cerca de contacto */
+.whatsapp-flotante.is-hidden {
+  opacity: 0;
+  transform: translateY(20px) scale(0.9);
+  pointer-events: none;
+}
+
+/* Mobile: flechas más chicas, X tampoco demasiado grande */
+@media (max-width: 640px) {
+  .gallery-lightbox-close,
+  .gallery-lightbox-nav {
+    width: 42px;
+    height: 42px;
+  }
+  .gallery-lightbox-caption {
+    font-size: var(--t-base);
+  }
+  .gallery-lightbox-stage {
+    max-width: 95vw;
+  }
+}
+
+
+/* ============================================================
+   20 · MODO REDUCIDO DE MOVIMIENTO
    ------------------------------------------------------------
    Si el usuario tiene activado "prefers-reduced-motion" en su
    sistema (por accesibilidad), desactivamos animaciones.

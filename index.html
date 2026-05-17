@@ -359,8 +359,8 @@
          WhatsApp prioritario, email como respaldo.
          ============================================================ -->
     <section id="contacto" aria-labelledby="contacto-titulo">
-      <h2 id="contacto-titulo">¿Te interesa? Contactanos</h2>
-      <p>Contacto: <strong>Liliana Sánchez</strong></p>
+      <h2 id="contacto-titulo">¿Te interesa? Contáctanos</h2>
+      <p>Contacto: <strong>Liliana Sánchez G.</strong></p>
 
       <!--
         TRUCO DE WHATSAPP:
@@ -447,6 +447,13 @@
   </footer>
 
   <!-- ============================================================
+       BARRA DE PROGRESO DE SCROLL
+       Línea brass arriba que se llena a medida que bajás. Indica
+       sutilmente cuánto falta. Manejada por JS en main.js.
+       ============================================================ -->
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <!-- ============================================================
        LIGHTBOX DEL PLANO
        Modal a pantalla completa que se activa cuando la URL contiene
        #plano-zoom. Click en fondo o en la X cierra (volviendo a #).
@@ -461,6 +468,42 @@
         <line x1="18" y1="6" x2="6" y2="18"/>
       </svg>
     </a>
+  </div>
+
+  <!-- ============================================================
+       LIGHTBOX DE GALERÍA
+       Modal con navegación entre fotos. Manejado por JS — abre al
+       hacer click en cualquier <figure> de la galería.
+       ============================================================ -->
+  <div class="gallery-lightbox" id="gallery-lightbox" role="dialog" aria-modal="true" aria-label="Galería de fotos">
+    <div class="gallery-lightbox-backdrop"></div>
+
+    <button class="gallery-lightbox-close" aria-label="Cerrar galería">
+      <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round">
+        <line x1="6" y1="6" x2="18" y2="18"/>
+        <line x1="18" y1="6" x2="6" y2="18"/>
+      </svg>
+    </button>
+
+    <button class="gallery-lightbox-nav gallery-lightbox-prev" aria-label="Foto anterior">
+      <svg viewBox="0 0 24 24" width="26" height="26" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 6 9 12 15 18"/>
+      </svg>
+    </button>
+
+    <figure class="gallery-lightbox-stage">
+      <img class="gallery-lightbox-img" src="" alt="">
+      <figcaption class="gallery-lightbox-meta">
+        <span class="gallery-lightbox-counter"></span>
+        <span class="gallery-lightbox-caption"></span>
+      </figcaption>
+    </figure>
+
+    <button class="gallery-lightbox-nav gallery-lightbox-next" aria-label="Foto siguiente">
+      <svg viewBox="0 0 24 24" width="26" height="26" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 6 15 12 9 18"/>
+      </svg>
+    </button>
   </div>
 
   <!-- ============================================================
