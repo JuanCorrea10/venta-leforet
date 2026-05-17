@@ -673,11 +673,11 @@ body > header > p:last-child {
 
 
 /* ============================================================
-   8 · VISTAS DOBLES
+   8 · VISTAS DOBLES (rework con escenas tipo "ventana")
    ------------------------------------------------------------
-   Sección con dos columnas — una para "montaña" (zona social)
-   y otra para "ciudad" (habitaciones). Cada lado tiene una
-   ilustración SVG, su dirección cardinal, título y descripción.
+   Cada vista es una "ventana al paisaje": una escena SVG grande
+   (cielo, astro, capas de profundidad) con el texto debajo.
+   Sin espacio muerto — la ilustración llena el ancho del card.
    ============================================================ */
 #vistas {
   background: var(--paper-cool);
@@ -686,7 +686,7 @@ body > header > p:last-child {
   padding-right: clamp(1.5rem, 5vw, 5rem);
   display: grid;
   grid-template-columns: 1fr 1fr;
-  column-gap: 0;
+  column-gap: clamp(2rem, 4vw, 3.5rem);
   row-gap: var(--s-6);
 }
 
@@ -697,84 +697,106 @@ body > header > p:last-child {
   font-style: italic;
   font-variation-settings: 'opsz' 144, 'SOFT' 100;
   font-size: var(--t-xl);
-  max-width: 28ch;
 }
 
-.vista-card {
-  padding: var(--s-7) clamp(var(--s-4), 3vw, var(--s-7));
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-4);
-  position: relative;
+#vistas > .vistas-intro {
+  grid-column: 1 / -1;
+  max-width: 52ch;
+  margin: calc(var(--s-5) * -1) auto var(--s-4);
+  font-family: var(--font-display);
+  font-size: var(--t-md);
+  font-weight: 300;
+  color: var(--ink-soft);
+  font-variation-settings: 'opsz' 144, 'SOFT' 30;
+  line-height: 1.5;
 }
 
-.vista-card.vista-mountain {
-  border-right: 1px solid var(--hairline);
-}
-
-.vista-card.vista-city {
-  background: linear-gradient(180deg, transparent 0%, rgba(161, 75, 48, 0.04) 100%);
-}
-
-/*
-  El SVG es un elemento de bloque normal, NO absolute.
-  Lo ordenamos al final del card con flex `order`.
-  Tiene altura fija de 160px y se ve como una "firma" visual
-  al pie de cada columna.
-*/
-.vista-illustration {
-  order: 10;                      /* último en la columna */
-  width: 100%;
-  max-width: 360px;
-  height: 140px;
-  margin-top: var(--s-5);
-  display: block;
-}
-
-/* Los SVG usan "currentColor" — el color viene del padre */
-.vista-mountain .vista-illustration {
-  color: var(--sage);
-}
-
-.vista-city .vista-illustration {
+#vistas > .vistas-intro em {
+  font-style: italic;
   color: var(--terracotta);
 }
 
+/* El card es un contenedor sin padding lateral propio:
+   la escena ocupa todo el ancho */
+.vista-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  overflow: hidden;
+  box-shadow: 0 1px 0 var(--hairline-mt),
+              0 20px 50px -30px rgba(22, 19, 16, 0.18);
+  transition: transform 0.4s var(--ease-out-quart),
+              box-shadow 0.4s var(--ease-out-quart);
+}
+
+.vista-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 1px 0 var(--hairline-mt),
+              0 30px 60px -25px rgba(22, 19, 16, 0.25);
+}
+
+/* La escena: ratio fijo para que se vea siempre como un paisaje */
+.vista-scene {
+  width: 100%;
+  aspect-ratio: 5 / 3.5;          /* ratio panorámico */
+  overflow: hidden;
+  position: relative;
+}
+
+.vista-scene svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Anula los styles globales (que ponen color sage/terracotta) */
+.vista-mountain .vista-scene,
+.vista-city .vista-scene {
+  color: inherit;
+}
+
+.vista-info {
+  padding: clamp(var(--s-5), 3vw, var(--s-6)) clamp(var(--s-5), 3vw, var(--s-7));
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
 .vista-direction {
-  order: 1;
   font-family: var(--font-body);
   font-size: var(--t-xs);
   font-weight: 600;
-  letter-spacing: 0.4em;
+  letter-spacing: 0.35em;
   text-transform: uppercase;
-  margin-bottom: var(--s-3);
+  margin: 0;
 }
 
 .vista-mountain .vista-direction { color: var(--sage); }
 .vista-city .vista-direction { color: var(--terracotta); }
 
 .vista-card h3 {
-  order: 2;
-  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
   font-style: italic;
   font-variation-settings: 'opsz' 144, 'SOFT' 100;
   font-weight: 300;
   color: var(--ink);
   letter-spacing: -0.02em;
   line-height: 1;
-  margin-top: var(--s-2);
+  margin: 0;
 }
 
-.vista-card > p {
-  order: 3;
+.vista-card .vista-info p {
   font-family: var(--font-body);
   font-size: var(--t-base);
   color: var(--ink-soft);
-  max-width: 36ch;
+  max-width: none;
   line-height: 1.6;
+  margin: 0;
 }
 
-.vista-card > p strong {
+.vista-card .vista-info p strong {
   font-weight: 600;
   color: var(--ink);
 }
@@ -1529,10 +1551,7 @@ body > footer {
 
   #vistas {
     grid-template-columns: 1fr;
-  }
-  .vista-card.vista-mountain {
-    border-right: none;
-    border-bottom: 1px solid var(--hairline);
+    row-gap: var(--s-5);
   }
 
   #galeria {
@@ -1672,15 +1691,20 @@ body > footer {
     font-size: 2.4rem;
   }
 
-  /* VISTAS DOBLES — más padding, menos altura SVG */
-  .vista-card {
-    padding: var(--s-6) var(--s-4);
+  /* VISTAS DOBLES en móvil: aspect ratio un toque más alto */
+  .vista-scene {
+    aspect-ratio: 5 / 3;
   }
   .vista-card h3 {
-    font-size: 2rem;
+    font-size: 1.7rem;
   }
-  .vista-illustration {
-    height: 100px;
+  .vista-info {
+    padding: var(--s-5) var(--s-4);
+    gap: var(--s-2);
+  }
+  #vistas > .vistas-intro {
+    font-size: var(--t-base);
+    margin-top: 0;
   }
 
   /* GALERÍA — una columna en celu */
