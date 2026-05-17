@@ -888,9 +888,10 @@ body > header > p:last-child {
 
 
 /* ============================================================
-   10 · PLANO
+   10 · PLANO (con lightbox al tocar)
    ------------------------------------------------------------
-   Centrado, tipo lámina de museo. Marco delgado, fondo papel.
+   Trigger clickeable que abre el plano en pantalla completa.
+   El plano se contiene al ancho del container, no desborda en móvil.
    ============================================================ */
 #plano {
   text-align: center;
@@ -901,15 +902,124 @@ body > header > p:last-child {
   text-align: left;
 }
 
-#plano > img {
+.plano-trigger {
+  display: block;
+  position: relative;
+  width: 100%;                    /* clave: no usar max-width sin width — desbordaba en móvil */
   max-width: var(--container-narrow);
-  margin-top: var(--s-6);
-  margin-inline: auto;
+  margin: var(--s-6) auto 0;
   background: var(--paper-cool);
-  padding: clamp(1rem, 3vw, 2.5rem);
+  padding: clamp(0.75rem, 3vw, 2.5rem);
   border: 1px solid var(--hairline);
   box-shadow: 0 1px 0 var(--hairline-mt),
               0 30px 60px -30px rgba(22, 19, 16, 0.15);
+  cursor: zoom-in;
+  transition: transform 0.4s var(--ease-out-quart),
+              box-shadow 0.4s var(--ease-out-quart);
+}
+
+.plano-trigger:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 1px 0 var(--hairline-mt),
+              0 40px 70px -25px rgba(22, 19, 16, 0.25);
+}
+
+.plano-trigger img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.plano-hint {
+  position: absolute;
+  bottom: clamp(0.75rem, 2vw, 1.5rem);
+  right: clamp(0.75rem, 2vw, 1.5rem);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--ink);
+  padding: var(--s-2) var(--s-3);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.plano-hint::before {
+  content: '⤢';                  /* símbolo de "expandir" */
+  font-size: 1em;
+}
+
+/*
+  LIGHTBOX — modal a pantalla completa.
+  Se muestra cuando la URL contiene su id como anchor.
+  La pseudo-clase :target detecta esto. Es CSS puro, sin JavaScript.
+*/
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: none;
+  background: rgba(22, 19, 16, 0.96);
+  padding: var(--s-5);
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox:target {
+  display: flex;
+  animation: lightboxIn 0.3s var(--ease-out-quart) both;
+}
+
+@keyframes lightboxIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Backdrop clickeable que cierra el modal */
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  cursor: zoom-out;
+}
+
+.lightbox img {
+  position: relative;
+  z-index: 2;
+  max-width: 95vw;
+  max-height: 85vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  background: var(--paper);
+  padding: clamp(0.5rem, 2vw, 1.5rem);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: clamp(1rem, 3vw, 1.5rem);
+  right: clamp(1rem, 3vw, 1.5rem);
+  z-index: 3;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(239, 234, 224, 0.1);
+  border: 1px solid rgba(239, 234, 224, 0.2);
+  border-radius: 50%;
+  color: var(--paper);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.lightbox-close:hover {
+  background: rgba(239, 234, 224, 0.25);
+  transform: rotate(90deg);
 }
 
 
@@ -1466,19 +1576,31 @@ body > footer .footer-info a:hover {
     display: none;
   }
 
-  /* CARACTERÍSTICAS — una sola columna en celu, más respirable */
+  /*
+    CARACTERÍSTICAS en móvil — grid 2x5 con las destacadas
+    (167m² y Esquinero) ocupando fila completa.
+    Mucho más prolijo que una lista vertical larga.
+  */
   #caracteristicas ul {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
-  #caracteristicas li,
-  #caracteristicas li:nth-child(3),
-  #caracteristicas li:nth-child(5) {
-    grid-column: 1;
-    min-height: 120px;
-    padding: var(--s-5) var(--s-4);
+  #caracteristicas li {
+    grid-column: span 1;
+    min-height: 100px;
+    padding: var(--s-4) var(--s-3);
   }
   #caracteristicas li strong {
-    font-size: 2.2rem;
+    font-size: 1.7rem;
+    margin-bottom: var(--s-2);
+  }
+  /* Las destacadas ocupan toda la fila */
+  #caracteristicas li:nth-child(3),
+  #caracteristicas li:nth-child(5) {
+    grid-column: 1 / -1;
+    text-align: center;
+    align-items: center;
+    padding: var(--s-5) var(--s-4);
+    min-height: 130px;
   }
   #caracteristicas li:nth-child(3) strong,
   #caracteristicas li:nth-child(5) strong {

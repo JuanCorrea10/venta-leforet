@@ -125,7 +125,7 @@
           </div>
 
           <a href="#contacto" class="btn-primary">
-            Hablar con la vendedora
+            Contactar
           </a>
         </div>
       </div>
@@ -296,8 +296,17 @@
          ============================================================ -->
     <section id="plano" aria-labelledby="plano-titulo">
       <h2 id="plano-titulo">Plano de distribución</h2>
-      <img src="assets/images/plano-distribucion.jpeg"
-           alt="Plano del apartamento 1605 mostrando distribución de 3 habitaciones, 2.5 baños, sala, comedor, cocina y terraza">
+      <!--
+        Wrap del plano en un <a> con href="#plano-zoom".
+        Al tocarlo se abre el modal (lightbox) que vive abajo de </main>.
+        Truco CSS: el modal usa la pseudo-clase :target — se muestra
+        cuando la URL termina con #plano-zoom. Sin JavaScript.
+      -->
+      <a href="#plano-zoom" class="plano-trigger" aria-label="Ver plano en pantalla completa">
+        <img src="assets/images/plano-distribucion.jpeg"
+             alt="Plano del apartamento 1605 mostrando distribución de 3 habitaciones, 2.5 baños, sala, comedor, cocina y terraza">
+        <span class="plano-hint">Tocar para ampliar</span>
+      </a>
     </section>
 
     <!-- ============================================================
@@ -351,7 +360,7 @@
          ============================================================ -->
     <section id="contacto" aria-labelledby="contacto-titulo">
       <h2 id="contacto-titulo">¿Te interesa? Contactanos</h2>
-      <p>Vendedora: <strong>Liliana Sánchez</strong></p>
+      <p>Contacto: <strong>Liliana Sánchez</strong></p>
 
       <!--
         TRUCO DE WHATSAPP:
@@ -417,6 +426,23 @@
       <p class="credit-meta">Ibagué · 2026</p>
     </div>
   </footer>
+
+  <!-- ============================================================
+       LIGHTBOX DEL PLANO
+       Modal a pantalla completa que se activa cuando la URL contiene
+       #plano-zoom. Click en fondo o en la X cierra (volviendo a #).
+       ============================================================ -->
+  <div class="lightbox" id="plano-zoom" role="dialog" aria-modal="true" aria-label="Plano en pantalla completa">
+    <a href="#" class="lightbox-backdrop" aria-label="Cerrar"></a>
+    <img src="assets/images/plano-distribucion.jpeg"
+         alt="Plano del apartamento 1605 ampliado">
+    <a href="#" class="lightbox-close" aria-label="Cerrar plano">
+      <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round">
+        <line x1="6" y1="6" x2="18" y2="18"/>
+        <line x1="18" y1="6" x2="6" y2="18"/>
+      </svg>
+    </a>
+  </div>
 
   <!-- ============================================================
        BOTÓN FLOTANTE DE WHATSAPP
