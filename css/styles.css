@@ -184,39 +184,51 @@ section {
   position: relative;
 }
 
-/* Eyebrow numérico arriba de cada h2 (excepto en hero) */
+/*
+  Numeración de secciones — versión integrada al título.
+  El número aparece inline antes del h2, en cursiva Fraunces y
+  color terracota. Estilo "magazine" — no es un label aparte
+  flotando, es parte del título.
+*/
 section:not(#hero) {
   counter-increment: section;
 }
 
 section:not(#hero) > h2 {
   position: relative;
-  padding-top: var(--s-7);
-  margin-bottom: var(--s-6);
+  margin-bottom: var(--s-7);
+  padding-bottom: var(--s-4);
+  display: flex;
+  align-items: baseline;
+  gap: clamp(0.8rem, 2vw, 1.5rem);
+  border-bottom: 1px solid var(--hairline);
 }
 
 section:not(#hero) > h2::before {
   content: counter(section, decimal-leading-zero);
-  position: absolute;
-  top: 0;
-  left: 0;
-  font-family: var(--font-body);
-  font-size: var(--t-xs);
-  font-weight: 600;
-  letter-spacing: 0.4em;
-  color: var(--brass);
-  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-size: 0.5em;                       /* relativo al tamaño del h2 */
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: -0.01em;
+  color: var(--terracotta);
+  font-variation-settings: 'opsz' 30, 'SOFT' 100;
+  flex-shrink: 0;
+  line-height: 1;
+  align-self: center;
 }
 
-/* Línea horizontal sutil que separa secciones */
+/* Línea horizontal entre secciones — más sutil y elegante */
 section:not(#hero, :first-of-type)::before {
   content: '';
   position: absolute;
   top: 0;
-  left: clamp(1.5rem, 5vw, 5rem);
-  right: clamp(1.5rem, 5vw, 5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
   height: 1px;
-  background: var(--hairline-mt);
+  background: var(--brass);
+  opacity: 0.4;
 }
 
 
@@ -265,113 +277,180 @@ body > header > p:last-child {
 /* ============================================================
    6 · HERO (sección de impacto)
    ------------------------------------------------------------
-   Layout asimétrico: el render del edificio domina el lado
-   derecho, los datos clave a la izquierda con tipografía grande.
+   Composición editorial con peso visual en el lado izquierdo
+   (tipografía grande + datos). La imagen ocupa el lado derecho
+   con un tag flotante "Entrega 2026". Abajo de todo, un cue
+   discreto invita a seguir bajando.
    ============================================================ */
 #hero {
   max-width: var(--container);
-  padding-top: clamp(2rem, 5vh, 4rem);
-  padding-bottom: clamp(5rem, 12vh, 10rem);
+  padding: clamp(2rem, 4vw, 3.5rem) clamp(1.5rem, 5vw, 5rem) clamp(4rem, 8vh, 7rem);
   display: grid;
-  grid-template-columns: 1.05fr 1fr;
-  gap: clamp(2rem, 5vw, 5rem);
-  align-items: end;
-  min-height: 80vh;
-}
-
-#hero > img {
-  grid-column: 2;
-  grid-row: 1;
-  width: 100%;
-  height: auto;
-  max-height: 80vh;
-  object-fit: cover;
-  object-position: center;
-  filter: contrast(0.96) saturate(0.9);
-  /* Animación de entrada al cargar la página */
-  animation: heroImageIn 1.4s var(--ease-out-quart) 0.3s both;
-}
-
-#hero > div {
-  grid-column: 1;
-  grid-row: 1;
-  align-self: end;
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-5);
-  /* Pseudo-elemento: "1605" en la lateral en orientación vertical */
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(2.5rem, 5vw, 5rem);
+  align-items: stretch;
+  min-height: calc(100vh - 8rem);
   position: relative;
 }
 
-#hero > div::before {
-  content: 'APTO · 1605';
-  position: absolute;
-  top: 0;
-  left: -2.5rem;
+/* --- Lado izquierdo: contenido textual --- */
+.hero-content {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+  max-width: 36rem;
+}
+
+.hero-eyebrow {
   font-family: var(--font-body);
   font-size: var(--t-xs);
   font-weight: 600;
-  letter-spacing: 0.5em;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
   color: var(--brass);
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  white-space: nowrap;
+  padding-bottom: var(--s-4);
+  border-bottom: 1px solid var(--brass);
+  display: inline-block;
+  align-self: flex-start;
+  max-width: none;
 }
 
-#hero h2 {
+/* El título — dos líneas con la segunda en cursiva terracota */
+.hero-title {
   font-size: var(--t-disp);
   font-weight: 300;
-  line-height: 0.98;
-  letter-spacing: -0.035em;
-  font-variation-settings: 'opsz' 144, 'SOFT' 50;
-  /*
-    El "esquinero" se ve en cursiva — pequeño detalle editorial.
-    Como en HTML está como "esquinero de 167,45 m²" entero, uso
-    pseudo-elemento o lo dejamos suave.
-  */
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  font-variation-settings: 'opsz' 144, 'SOFT' 40;
+  margin-block: var(--s-2) var(--s-3);
 }
 
-#hero h2 em {
+.hero-title .line {
+  display: block;
+}
+
+.hero-title em {
   font-style: italic;
   color: var(--terracotta);
   font-variation-settings: 'opsz' 144, 'SOFT' 100;
 }
 
-#hero p {
-  font-size: var(--t-md);
-  color: var(--ink-soft);
-  max-width: 32ch;
-  letter-spacing: 0;
+/* Línea de área: número grande + contexto */
+.hero-area {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+  max-width: none;
+  margin-top: var(--s-2);
 }
 
-#hero p strong {
+.hero-area strong {
   font-family: var(--font-display);
-  font-weight: 300;
   font-size: var(--t-xl);
-  display: block;
-  color: var(--ink);
-  margin-top: var(--s-3);
+  font-weight: 300;
   letter-spacing: -0.02em;
+  color: var(--ink);
   font-variation-settings: 'opsz' 144;
 }
 
-#hero p:last-of-type {
-  font-style: italic;
-  font-family: var(--font-display);
-  font-size: var(--t-base);
-  font-variation-settings: 'opsz' 30;
-  color: var(--ink-mute);
+.hero-area span {
+  font-family: var(--font-body);
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
 }
 
-#hero a {
+/* Specs como pills con separadores */
+.hero-specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  list-style: none;
+  padding: var(--s-4) 0;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  margin: var(--s-3) 0;
+}
+
+.hero-specs li {
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  padding-right: var(--s-4);
+  margin-right: var(--s-4);
+  border-right: 1px solid var(--hairline);
+  white-space: nowrap;
+}
+
+.hero-specs li:last-child {
+  border-right: none;
+  padding-right: 0;
+  margin-right: 0;
+}
+
+/* Bloque de precio */
+.hero-price {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  padding: var(--s-5) 0 var(--s-2);
+}
+
+.hero-price-label {
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+.hero-price strong {
+  font-family: var(--font-display);
+  font-size: var(--t-2xl);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--ink);
+  font-variation-settings: 'opsz' 144;
+  font-feature-settings: 'tnum' on;       /* números tabulares — todos del mismo ancho */
+}
+
+.hero-price strong small {
+  font-size: 0.45em;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink-soft);
+  margin-left: 0.2em;
+  letter-spacing: 0;
+}
+
+.hero-price-note {
+  font-family: var(--font-display);
+  font-size: var(--t-sm);
+  font-style: italic;
+  color: var(--ink-mute);
+  font-variation-settings: 'opsz' 30;
+  margin-top: var(--s-2);
+}
+
+/* Botón principal — más con presencia */
+.btn-primary,
+#hero .btn-primary {
   align-self: flex-start;
-  margin-top: var(--s-5);
-  padding: var(--s-4) var(--s-6);
+  margin-top: var(--s-4);
+  padding: var(--s-4) var(--s-7);
   background: var(--ink);
   color: var(--paper);
+  font-family: var(--font-body);
   font-size: var(--t-sm);
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   border: 1px solid var(--ink);
   transition: all 0.4s var(--ease-out-quart);
@@ -379,12 +458,131 @@ body > header > p:last-child {
   overflow: hidden;
 }
 
-#hero a:hover {
+.btn-primary::after {
+  content: '→';
+  margin-left: var(--s-3);
+  display: inline-block;
+  transition: transform 0.4s var(--ease-out-quart);
+}
+
+.btn-primary:hover {
   background: var(--terracotta);
   border-color: var(--terracotta);
-  letter-spacing: 0.22em;
-  padding-left: var(--s-7);
-  padding-right: var(--s-7);
+  letter-spacing: 0.26em;
+}
+
+.btn-primary:hover::after {
+  transform: translateX(6px);
+}
+
+/* --- Lado derecho: imagen --- */
+.hero-media {
+  position: relative;
+  height: 100%;
+  min-height: 60vh;
+  overflow: hidden;
+}
+
+.hero-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: contrast(0.96) saturate(0.9);
+  animation: heroImageIn 1.4s var(--ease-out-quart) 0.3s both;
+}
+
+/* Tag flotante sobre la imagen */
+.hero-tag {
+  position: absolute;
+  top: var(--s-5);
+  left: var(--s-5);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  padding: var(--s-3) var(--s-4);
+  border: 1px solid var(--hairline);
+  box-shadow: 0 1px 20px rgba(22, 19, 16, 0.1);
+  z-index: 2;
+  animation: fadeUp 1s var(--ease-out-quart) 1s both;
+}
+
+/* Sello vertical "APTO · 1605" sobre la imagen */
+.hero-media::after {
+  content: 'Apto · 1605';
+  position: absolute;
+  bottom: var(--s-5);
+  right: var(--s-5);
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.5em;
+  color: var(--paper);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  mix-blend-mode: difference;
+  opacity: 0.7;
+}
+
+/* --- Scroll cue al fondo del hero --- */
+.hero-scroll {
+  position: absolute;
+  bottom: clamp(1rem, 3vh, 2rem);
+  left: clamp(1.5rem, 5vw, 5rem);
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: color 0.3s ease, gap 0.3s ease;
+  animation: fadeUp 1s var(--ease-out-quart) 1.3s both;
+}
+
+.hero-scroll-line {
+  display: inline-block;
+  width: 2.5rem;
+  height: 1px;
+  background: var(--ink-soft);
+  position: relative;
+  transition: width 0.4s var(--ease-out-quart),
+              background 0.3s ease;
+}
+
+.hero-scroll-line::after {
+  content: '';
+  position: absolute;
+  right: -3px;
+  top: -3px;
+  width: 7px;
+  height: 7px;
+  border-right: 1px solid var(--ink-soft);
+  border-bottom: 1px solid var(--ink-soft);
+  transform: rotate(-45deg);
+  transition: border-color 0.3s ease;
+}
+
+.hero-scroll:hover {
+  color: var(--terracotta);
+  gap: var(--s-4);
+}
+
+.hero-scroll:hover .hero-scroll-line {
+  width: 3.5rem;
+  background: var(--terracotta);
+}
+
+.hero-scroll:hover .hero-scroll-line::after {
+  border-color: var(--terracotta);
 }
 
 
@@ -462,92 +660,110 @@ body > header > p:last-child {
 /* ============================================================
    8 · VISTAS DOBLES
    ------------------------------------------------------------
-   Lo que vende al apto. Dos columnas claramente distintas
-   con tipografía editorial grande, casi tipo poema.
+   Sección con dos columnas — una para "montaña" (zona social)
+   y otra para "ciudad" (habitaciones). Cada lado tiene una
+   ilustración SVG, su dirección cardinal, título y descripción.
    ============================================================ */
 #vistas {
   background: var(--paper-cool);
-  max-width: none;                /* full bleed */
+  max-width: none;
   padding-left: clamp(1.5rem, 5vw, 5rem);
   padding-right: clamp(1.5rem, 5vw, 5rem);
-}
-
-#vistas > h2,
-#vistas > div {
-  max-width: var(--container);
-  margin-inline: auto;
-}
-
-#vistas > h2 {
-  font-style: italic;
-  font-variation-settings: 'opsz' 144, 'SOFT' 100;
-  max-width: 20ch;
-}
-
-#vistas {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0;
   column-gap: 0;
-  row-gap: var(--s-7);
-  align-items: stretch;
+  row-gap: var(--s-6);
 }
 
 #vistas > h2 {
   grid-column: 1 / -1;
+  max-width: var(--container);
+  margin-inline: auto;
+  font-style: italic;
+  font-variation-settings: 'opsz' 144, 'SOFT' 100;
+  font-size: var(--t-xl);
+  max-width: 28ch;
 }
 
-#vistas > div {
-  padding: var(--s-7) var(--s-6);
+.vista-card {
   position: relative;
+  padding: var(--s-7) clamp(var(--s-4), 3vw, var(--s-7));
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  overflow: hidden;
+  min-height: 360px;
 }
 
-#vistas > div:first-of-type {
+.vista-card.vista-mountain {
   border-right: 1px solid var(--hairline);
+  color: var(--sage);
 }
 
-#vistas > div::before {
+.vista-card.vista-city {
+  color: var(--terracotta);
+  background: linear-gradient(180deg, transparent 0%, rgba(161, 75, 48, 0.04) 100%);
+}
+
+/* La ilustración SVG ocupa el fondo bajo del card */
+.vista-illustration {
   position: absolute;
-  top: 0;
-  left: var(--s-6);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 60%;
+  pointer-events: none;
+  z-index: 0;
+  /* El SVG usa "currentColor" — toma el color del padre */
+}
+
+/* Para que mountain/city tengan sus propios colores en la ilustración */
+.vista-mountain .vista-illustration {
+  color: var(--sage);
+}
+
+.vista-city .vista-illustration {
+  color: var(--terracotta);
+}
+
+.vista-direction {
   font-family: var(--font-body);
   font-size: var(--t-xs);
   font-weight: 600;
   letter-spacing: 0.4em;
-  color: var(--sage);
   text-transform: uppercase;
+  position: relative;
+  z-index: 1;
+  margin-bottom: var(--s-3);
 }
 
-#vistas > div:first-of-type::before {
-  content: '↑ NORTE — MONTAÑA';
-}
-
-#vistas > div:last-of-type::before {
-  content: '↓ ESTE — CIUDAD';
-  color: var(--terracotta);
-}
-
-#vistas h3 {
-  font-size: var(--t-2xl);
+.vista-card h3 {
+  font-size: clamp(2rem, 3.5vw, 3rem);
   font-style: italic;
   font-variation-settings: 'opsz' 144, 'SOFT' 100;
   font-weight: 300;
-  margin-top: var(--s-6);
-  margin-bottom: var(--s-4);
   color: var(--ink);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+  margin-top: var(--s-2);
 }
 
-#vistas p {
-  font-size: var(--t-md);
+.vista-card > p {
+  font-family: var(--font-body);
+  font-size: var(--t-base);
   color: var(--ink-soft);
   max-width: 30ch;
-  line-height: 1.5;
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
 }
 
-#vistas p strong {
+.vista-card > p strong {
   font-weight: 600;
   color: var(--ink);
-  font-style: normal;
 }
 
 
@@ -688,56 +904,87 @@ body > header > p:last-child {
 /* ============================================================
    11 · ZONAS COMUNES
    ------------------------------------------------------------
-   Listado en formato editorial — cada item ocupa una línea
-   con su número, separado por filetes. Se siente tipo "menú".
+   Listado editorial tipo "carta de servicios". Cada item con
+   su número y un guion largo decorativo. Tipografía Fraunces
+   grande para que tenga peso visual.
    ============================================================ */
+#zonas-comunes {
+  background: var(--ink);
+  color: var(--paper);
+  max-width: none;
+  padding-left: clamp(1.5rem, 5vw, 5rem);
+  padding-right: clamp(1.5rem, 5vw, 5rem);
+}
+
+#zonas-comunes > h2,
+#zonas-comunes > ul {
+  max-width: var(--container);
+  margin-inline: auto;
+}
+
+#zonas-comunes > h2 {
+  color: var(--paper);
+  font-style: italic;
+  font-variation-settings: 'opsz' 144, 'SOFT' 80;
+  border-bottom-color: rgba(239, 234, 224, 0.18);
+}
+
+#zonas-comunes > h2::before {
+  color: var(--brass);
+}
+
 #zonas-comunes ul {
-  max-width: var(--container-narrow);
-  margin-top: var(--s-5);
+  margin-top: var(--s-6);
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0;
-  border-top: 1px solid var(--hairline);
+  gap: 0 clamp(2rem, 5vw, 4rem);
+  counter-reset: amenity;
 }
 
 #zonas-comunes li {
   font-family: var(--font-display);
-  font-size: var(--t-md);
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
   font-weight: 300;
   letter-spacing: -0.01em;
-  padding: var(--s-4) var(--s-5);
-  border-bottom: 1px solid var(--hairline);
+  padding: var(--s-5) 0;
+  border-bottom: 1px solid rgba(239, 234, 224, 0.12);
   display: flex;
   align-items: center;
-  gap: var(--s-4);
-  font-variation-settings: 'opsz' 144;
-  transition: background 0.4s var(--ease-out-quart),
-              padding-left 0.4s var(--ease-out-quart);
+  gap: var(--s-5);
+  font-variation-settings: 'opsz' 144, 'SOFT' 30;
+  transition: padding-left 0.4s var(--ease-out-quart),
+              color 0.3s ease;
   counter-increment: amenity;
   position: relative;
-}
-
-#zonas-comunes ul {
-  counter-reset: amenity;
+  color: var(--paper);
 }
 
 #zonas-comunes li::before {
   content: counter(amenity, decimal-leading-zero);
   font-family: var(--font-body);
-  font-size: var(--t-xs);
+  font-size: 0.55rem;
   font-weight: 600;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.25em;
   color: var(--brass);
-  width: 2em;
+  min-width: 2.5em;
+  flex-shrink: 0;
+}
+
+#zonas-comunes li::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(184, 145, 101, 0.2);
+  margin-left: var(--s-3);
 }
 
 #zonas-comunes li:hover {
-  background: var(--paper-cool);
-  padding-left: var(--s-6);
+  padding-left: var(--s-3);
+  color: var(--brass);
 }
 
-#zonas-comunes li:nth-child(odd) {
-  border-right: 1px solid var(--hairline);
+#zonas-comunes li:hover::after {
+  background: var(--brass);
 }
 
 
@@ -793,10 +1040,11 @@ body > header > p:last-child {
   max-width: 18ch;
   font-style: italic;
   font-variation-settings: 'opsz' 144, 'SOFT' 80;
+  border-bottom-color: rgba(239, 234, 224, 0.18);   /* hairline claro sobre dark */
 }
 
 #contacto > h2::before {
-  color: var(--brass) !important;
+  color: var(--brass);
 }
 
 #contacto > p {
@@ -966,15 +1214,18 @@ body > footer small {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-#hero > div > * {
+/* Entrada escalonada de los elementos del hero al cargar */
+.hero-content > * {
   opacity: 0;
   animation: fadeUp 1s var(--ease-out-quart) both;
 }
-#hero > div > *:nth-child(1) { animation-delay: 0.2s; }
-#hero > div > *:nth-child(2) { animation-delay: 0.35s; }
-#hero > div > *:nth-child(3) { animation-delay: 0.5s; }
-#hero > div > *:nth-child(4) { animation-delay: 0.65s; }
-#hero > div > *:nth-child(5) { animation-delay: 0.8s; }
+.hero-content > *:nth-child(1) { animation-delay: 0.2s; }
+.hero-content > *:nth-child(2) { animation-delay: 0.3s; }
+.hero-content > *:nth-child(3) { animation-delay: 0.4s; }
+.hero-content > *:nth-child(4) { animation-delay: 0.5s; }
+.hero-content > *:nth-child(5) { animation-delay: 0.6s; }
+.hero-content > *:nth-child(6) { animation-delay: 0.7s; }
+.hero-content > *:nth-child(7) { animation-delay: 0.8s; }
 
 /* Entrada al hacer scroll, usando scroll-driven animations */
 @supports (animation-timeline: view()) {
@@ -1007,21 +1258,24 @@ body > footer small {
     text-align: left;
   }
 
+  /* Hero pasa a una sola columna; imagen arriba, contenido abajo */
   #hero {
     grid-template-columns: 1fr;
     min-height: auto;
+    padding-bottom: clamp(5rem, 10vh, 7rem);
   }
-  #hero > img {
-    grid-column: 1;
-    grid-row: 1;
-    max-height: 55vh;
+  .hero-media {
+    min-height: 50vh;
+    order: -1;
     margin-bottom: var(--s-5);
   }
-  #hero > div {
-    grid-column: 1;
-    grid-row: 2;
+  .hero-content {
+    max-width: none;
   }
-  #hero > div::before {
+  .hero-scroll {
+    display: none;
+  }
+  .hero-media::after {
     display: none;
   }
 
@@ -1036,7 +1290,7 @@ body > footer small {
   #vistas {
     grid-template-columns: 1fr;
   }
-  #vistas > div:first-of-type {
+  .vista-card.vista-mountain {
     border-right: none;
     border-bottom: 1px solid var(--hairline);
   }
@@ -1060,8 +1314,11 @@ body > footer small {
   #zonas-comunes ul {
     grid-template-columns: 1fr;
   }
-  #zonas-comunes li:nth-child(odd) {
-    border-right: none;
+
+  /* En móvil, sección numerada con número y h2 puede romperse */
+  section:not(#hero) > h2 {
+    flex-wrap: wrap;
+    gap: var(--s-3);
   }
 
   .whatsapp-flotante {

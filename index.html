@@ -79,26 +79,55 @@
          entrar. La más impactante. Va la foto principal y el precio.
          ============================================================ -->
     <section id="hero" aria-labelledby="hero-titulo">
-      <img src="assets/images/fachada-render.png"
-           alt="Render arquitectónico del edificio Leforet El Vergel">
-      <!--
-        El "alt" describe la imagen. Es OBLIGATORIO:
-        - Si la imagen no carga, se muestra el alt.
-        - Los lectores de pantalla (para personas ciegas) leen el alt.
-        - Google usa el alt para entender de qué es la imagen.
-      -->
+      <div class="hero-media">
+        <img src="assets/images/fachada-render.png"
+             alt="Render arquitectónico del edificio Leforet El Vergel">
+        <!--
+          El "alt" describe la imagen. Es OBLIGATORIO:
+          - Si la imagen no carga, se muestra el alt.
+          - Los lectores de pantalla (para personas ciegas) leen el alt.
+          - Google usa el alt para entender de qué es la imagen.
+        -->
+        <span class="hero-tag">Entrega 2026</span>
+      </div>
 
-      <div>
-        <h2 id="hero-titulo">Apartamento esquinero de 167,45 m²</h2>
-        <p>3 habitaciones · 2,5 baños · Piso 16</p>
-        <p><strong>$1.265.610.500 COP</strong></p>
-        <p>Negociable según propuesta económica</p>
-        <a href="#contacto">Contactar a la vendedora</a>
+      <div class="hero-content">
+        <p class="hero-eyebrow">Apartamento 1605 · El Vergel, Ibagué</p>
+
+        <h2 id="hero-titulo" class="hero-title">
+          <span class="line">Un esquinero</span>
+          <span class="line"><em>con vista doble</em></span>
+        </h2>
+
+        <p class="hero-area">
+          <strong>167,45 m²</strong>
+          <span>piso dieciséis · acabados incluidos</span>
+        </p>
+
+        <ul class="hero-specs">
+          <li>3 habitaciones</li>
+          <li>2,5 baños</li>
+          <li>2 balcones</li>
+          <li>Estrato 6</li>
+        </ul>
+
+        <div class="hero-price">
+          <span class="hero-price-label">Venta directa</span>
+          <strong>$1.265.610.500 <small>COP</small></strong>
+          <span class="hero-price-note">Negociable según propuesta económica.</span>
+        </div>
+
+        <a href="#contacto" class="btn-primary">Contactar a la vendedora</a>
         <!--
           href="#contacto" es un "enlace ancla": al hacer click
           la página baja sola hasta el id="contacto" de más abajo.
         -->
       </div>
+
+      <a href="#caracteristicas" class="hero-scroll" aria-label="Recorrer el sitio">
+        <span class="hero-scroll-line"></span>
+        Recorrer
+      </a>
     </section>
 
     <!-- ============================================================
@@ -128,14 +157,57 @@
          Le damos protagonismo propio.
          ============================================================ -->
     <section id="vistas" aria-labelledby="vistas-titulo">
-      <h2 id="vistas-titulo">Vista doble — privilegio de ser esquinero</h2>
-      <div>
+      <h2 id="vistas-titulo">El privilegio de ser esquinero</h2>
+
+      <!--
+        Ilustraciones SVG (vectores) hechas a mano.
+        Las dibujamos con coordenadas, no son imágenes.
+        Ventaja: pesan poco, se ven nítidas a cualquier tamaño,
+        y se pueden colorear desde CSS con "currentColor".
+      -->
+
+      <div class="vista-card vista-mountain">
+        <svg class="vista-illustration" viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M0 140 L80 65 L135 100 L190 35 L260 90 L330 25 L400 105 L400 160 L0 160 Z" fill="currentColor" fill-opacity="0.07"/>
+          <path d="M0 150 L60 115 L130 140 L200 95 L270 130 L340 90 L400 135" stroke="currentColor" stroke-width="1" fill="none" stroke-opacity="0.35" stroke-linejoin="round"/>
+          <path d="M0 138 L80 63 L135 98 L190 33 L260 88 L330 23 L400 103" stroke="currentColor" stroke-width="0.9" fill="none" stroke-linejoin="round"/>
+          <circle cx="330" cy="23" r="2" fill="currentColor"/>
+        </svg>
+        <p class="vista-direction">↑ Norte · Montaña</p>
         <h3>Zona social</h3>
-        <p>Sala, comedor y balcones con vista a la <strong>montaña</strong>.</p>
+        <p>Sala, comedor y balcones abiertos a la <strong>cordillera</strong>. La luz de la mañana entra suave por los ventanales.</p>
       </div>
-      <div>
+
+      <div class="vista-card vista-city">
+        <svg class="vista-illustration" viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g>
+            <rect x="15" y="92" width="32" height="68" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-width="0.7" stroke-opacity="0.5"/>
+            <rect x="52" y="68" width="38" height="92" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-width="0.7" stroke-opacity="0.5"/>
+            <rect x="95" y="45" width="22" height="115" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-width="0.8"/>
+            <rect x="122" y="78" width="34" height="82" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-width="0.7" stroke-opacity="0.5"/>
+            <rect x="161" y="28" width="26" height="132" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-width="0.8"/>
+            <rect x="192" y="62" width="42" height="98" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-width="0.7" stroke-opacity="0.5"/>
+            <rect x="239" y="42" width="22" height="118" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-width="0.8"/>
+            <rect x="266" y="82" width="36" height="78" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-width="0.7" stroke-opacity="0.5"/>
+            <rect x="307" y="52" width="30" height="108" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-width="0.8"/>
+            <rect x="342" y="72" width="42" height="88" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-width="0.7" stroke-opacity="0.5"/>
+          </g>
+          <g stroke="currentColor" stroke-width="0.4" stroke-opacity="0.3" fill="none">
+            <line x1="31" y1="105" x2="31" y2="155"/>
+            <line x1="71" y1="82" x2="71" y2="155"/>
+            <line x1="106" y1="60" x2="106" y2="155"/>
+            <line x1="139" y1="92" x2="139" y2="155"/>
+            <line x1="174" y1="42" x2="174" y2="155"/>
+            <line x1="213" y1="76" x2="213" y2="155"/>
+            <line x1="250" y1="56" x2="250" y2="155"/>
+            <line x1="284" y1="96" x2="284" y2="155"/>
+            <line x1="322" y1="66" x2="322" y2="155"/>
+            <line x1="363" y1="86" x2="363" y2="155"/>
+          </g>
+        </svg>
+        <p class="vista-direction">→ Este · Ciudad</p>
         <h3>Habitaciones</h3>
-        <p>Vista a la <strong>ciudad</strong>, sector El Vergel.</p>
+        <p>Mirador del <strong>sector El Vergel</strong>. Al caer la tarde se ven las luces de la ciudad encenderse.</p>
       </div>
     </section>
 
