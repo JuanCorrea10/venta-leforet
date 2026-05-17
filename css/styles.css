@@ -307,13 +307,21 @@ body > header > p:last-child {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 30%;          /* enfoca la parte alta del edificio */
-  animation: kenBurns 14s ease-out forwards;
-  filter: contrast(0.95) saturate(0.92);
+  /*
+    object-position: center top
+    Ancla la imagen al TOP del viewport. Como la foto es vertical
+    (1200x1600), al cortar para encajar en cualquier viewport, el
+    recorte se hace de abajo. Así el timestamp ("30 abr 2026 · Azure")
+    en la esquina inferior derecha queda fuera del área visible.
+  */
+  object-position: center top;
+  transform-origin: center top;         /* el zoom pivota desde arriba */
+  animation: kenBurns 16s ease-out forwards;
+  filter: contrast(0.96) saturate(0.95) brightness(0.95);
 }
 
 @keyframes kenBurns {
-  0%   { transform: scale(1.12); }
+  0%   { transform: scale(1.08); }
   100% { transform: scale(1.0);  }
 }
 
