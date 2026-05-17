@@ -79,51 +79,56 @@
          entrar. La más impactante. Va la foto principal y el precio.
          ============================================================ -->
     <section id="hero" aria-labelledby="hero-titulo">
-      <div class="hero-media">
+      <!--
+        Hero "cinematográfico": la imagen del edificio ocupa toda
+        la pantalla como fondo. Encima un gradiente sutil para que
+        el texto blanco se lea bien sobre cualquier zona de la imagen.
+      -->
+      <div class="hero-image">
         <img src="assets/images/fachada-render.png"
              alt="Render arquitectónico del edificio Leforet El Vergel">
         <!--
-          El "alt" describe la imagen. Es OBLIGATORIO:
-          - Si la imagen no carga, se muestra el alt.
-          - Los lectores de pantalla (para personas ciegas) leen el alt.
-          - Google usa el alt para entender de qué es la imagen.
+          La imagen tiene animación "Ken Burns" (zoom muy lento desde
+          110% a 100%) al cargar. Le da sensación de película.
         -->
-        <span class="hero-tag">Entrega 2026</span>
       </div>
+
+      <!-- Gradiente: oscurece arriba y abajo, deja el medio limpio -->
+      <div class="hero-gradient" aria-hidden="true"></div>
 
       <div class="hero-content">
-        <p class="hero-eyebrow">Apartamento 1605 · El Vergel, Ibagué</p>
-
-        <h2 id="hero-titulo" class="hero-title">
-          <span class="line">Un esquinero</span>
-          <span class="line"><em>con vista doble</em></span>
-        </h2>
-
-        <p class="hero-area">
-          <strong>167,45 m²</strong>
-          <span>piso dieciséis · acabados incluidos</span>
-        </p>
-
-        <ul class="hero-specs">
-          <li>3 habitaciones</li>
-          <li>2,5 baños</li>
-          <li>2 balcones</li>
-          <li>Estrato 6</li>
-        </ul>
-
-        <div class="hero-price">
-          <span class="hero-price-label">Venta directa</span>
-          <strong>$1.265.610.500 <small>COP</small></strong>
-          <span class="hero-price-note">Negociable según propuesta económica.</span>
+        <!-- Bloque superior: eyebrow del proyecto + tag de entrega -->
+        <div class="hero-top">
+          <p class="hero-eyebrow">Leforet El Vergel · 1605</p>
+          <span class="hero-tag">Entrega 2026</span>
         </div>
 
-        <a href="#contacto" class="btn-primary">Contactar a la vendedora</a>
-        <!--
-          href="#contacto" es un "enlace ancla": al hacer click
-          la página baja sola hasta el id="contacto" de más abajo.
-        -->
+        <!-- Bloque inferior: lo más importante para enganchar -->
+        <div class="hero-bottom">
+          <h2 id="hero-titulo" class="hero-title">
+            <span class="line">Un esquinero</span>
+            <span class="line"><em>con vista doble</em></span>
+          </h2>
+
+          <!-- Tres stats grandes: el corazón del primer impacto -->
+          <ul class="hero-stats">
+            <li><strong>167</strong><span>m² construidos</span></li>
+            <li><strong>3</strong><span>habitaciones</span></li>
+            <li><strong>16</strong><span>piso</span></li>
+          </ul>
+
+          <div class="hero-price">
+            <span class="hero-price-label">Venta directa</span>
+            <strong>$1.265.610.500 <small>COP</small></strong>
+          </div>
+
+          <a href="#contacto" class="btn-primary">
+            Hablar con la vendedora
+          </a>
+        </div>
       </div>
 
+      <!-- Scroll cue mínimo abajo a la derecha -->
       <a href="#caracteristicas" class="hero-scroll" aria-label="Recorrer el sitio">
         <span class="hero-scroll-line"></span>
         Recorrer
@@ -385,22 +390,30 @@
   </main>
 
   <!-- ============================================================
-       FOOTER: pie de página. Info chica, complementaria.
+       FOOTER: pie de página con info del inmueble y créditos.
        ============================================================ -->
   <footer>
-    <p>Apartamento 1605 · Edificio Leforet El Vergel · Ibagué, Tolima</p>
-    <p>
-      Proyecto en construcción ·
-      <a href="https://www.leforetelvergel.com/" target="_blank" rel="noopener">
-        Web oficial del proyecto
-      </a>
-    </p>
-    <p><small>Página creada en 2026</small></p>
+    <div class="footer-info">
+      <p>Apartamento 1605 · Edificio Leforet El Vergel · Ibagué, Tolima</p>
+      <p>
+        Proyecto en construcción ·
+        <a href="https://www.leforetelvergel.com/" target="_blank" rel="noopener">
+          Web oficial del proyecto
+        </a>
+      </p>
+    </div>
     <!--
       target="_blank" = abre el link en una pestaña nueva.
       rel="noopener" es OBLIGATORIO con target="_blank" por seguridad:
       sin esto, la página externa podría manipular nuestra pestaña.
     -->
+
+    <!-- Créditos del desarrollador -->
+    <div class="footer-credit">
+      <p class="credit-label">Sitio diseñado y desarrollado por</p>
+      <p class="credit-name">Juan Martín Correa</p>
+      <p class="credit-meta">Ibagué · 2026</p>
+    </div>
   </footer>
 
   <!-- ============================================================
