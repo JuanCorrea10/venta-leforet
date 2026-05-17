@@ -401,29 +401,48 @@
   </main>
 
   <!-- ============================================================
-       FOOTER: pie de página con info del inmueble y créditos.
+       FOOTER: estructura de 3 columnas tipo brokerage de lujo.
+       Inspirada en Corcoran Sunshine.
        ============================================================ -->
   <footer>
-    <div class="footer-info">
-      <p>Apartamento 1605 · Edificio Leforet El Vergel · Ibagué, Tolima</p>
-      <p>
-        Proyecto en construcción ·
+    <div class="footer-grid">
+      <!-- Columna 1: El inmueble -->
+      <div class="footer-col">
+        <h3 class="footer-col-title">El apartamento</h3>
+        <p>Apto 1605</p>
+        <p>Leforet El Vergel</p>
+        <p>Carrera 16 #67-170</p>
+        <p>Ibagué, Tolima</p>
         <a href="https://www.leforetelvergel.com/" target="_blank" rel="noopener">
-          Web oficial del proyecto
+          Web oficial del proyecto →
         </a>
-      </p>
-    </div>
-    <!--
-      target="_blank" = abre el link en una pestaña nueva.
-      rel="noopener" es OBLIGATORIO con target="_blank" por seguridad:
-      sin esto, la página externa podría manipular nuestra pestaña.
-    -->
+        <!--
+          target="_blank" = abre en pestaña nueva.
+          rel="noopener" es OBLIGATORIO por seguridad.
+        -->
+      </div>
 
-    <!-- Créditos del desarrollador -->
-    <div class="footer-credit">
-      <p class="credit-label">Sitio diseñado y desarrollado por</p>
-      <p class="credit-name">Juan Martín Correa</p>
-      <p class="credit-meta">Ibagué · 2026</p>
+      <!-- Columna 2: Contacto -->
+      <div class="footer-col">
+        <h3 class="footer-col-title">Contacto</h3>
+        <p>Liliana Sánchez</p>
+        <a href="https://wa.me/573184095180">+57 318 409 5180</a>
+        <a href="mailto:teita79@gmail.com">teita79@gmail.com</a>
+      </div>
+
+      <!-- Columna 3: Créditos del desarrollador -->
+      <div class="footer-col footer-credit">
+        <h3 class="footer-col-title">Créditos</h3>
+        <p class="credit-label">Diseñado y desarrollado por</p>
+        <p class="credit-name">Juan Martín Correa</p>
+        <p class="credit-meta">Ibagué · 2026</p>
+      </div>
+    </div>
+
+    <!-- Barra inferior con copyright + volver arriba -->
+    <div class="footer-bottom">
+      <p>© 2026 · Apto 1605 Leforet El Vergel · Todos los derechos reservados</p>
+      <a href="#hero" class="back-to-top">Volver arriba ↑</a>
     </div>
   </footer>
 
@@ -443,6 +462,14 @@
       </svg>
     </a>
   </div>
+
+  <!-- ============================================================
+       SCRIPTS
+       Lenis: librería de scroll suave (~5KB). Da sensación premium
+       como en sitios de edificios de lujo.
+       ============================================================ -->
+  <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
+  <script src="js/main.js"></script>
 
   <!-- ============================================================
        BOTÓN FLOTANTE DE WHATSAPP

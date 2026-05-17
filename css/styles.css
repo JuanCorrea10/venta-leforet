@@ -412,8 +412,9 @@ body > header > p:last-child {
 
 .hero-title em {
   font-style: italic;
-  color: var(--brass);
+  color: var(--paper);                /* mismo color que el resto — el italic ya diferencia */
   font-variation-settings: 'opsz' 144, 'SOFT' 100;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.3);  /* sombra sutil para legibilidad */
 }
 
 /* Stats horizontales: tres números grandes */
@@ -1236,68 +1237,90 @@ body > header > p:last-child {
 
 
 /* ============================================================
-   14 · FOOTER (info del inmueble + créditos del desarrollador)
+   14 · FOOTER (estructura de 3 columnas tipo brokerage de lujo)
    ============================================================ */
 body > footer {
   background: var(--ink);
   color: var(--paper-cool);
-  padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 5vw, 5rem);
+  padding: clamp(3.5rem, 7vw, 6rem) clamp(1.5rem, 5vw, 5rem) clamp(2rem, 4vw, 3rem);
 }
 
-body > footer .footer-info,
-body > footer .footer-credit {
+.footer-grid {
   max-width: var(--container);
   margin-inline: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(2.5rem, 5vw, 5rem);
+  padding-bottom: clamp(3rem, 5vw, 4rem);
+  border-bottom: 1px solid rgba(239, 234, 224, 0.15);
 }
 
-body > footer .footer-info {
+.footer-col {
   display: flex;
   flex-direction: column;
   gap: var(--s-2);
-  font-size: var(--t-xs);
-  color: rgba(239, 234, 224, 0.6);
-  letter-spacing: 0.08em;
-  padding-bottom: var(--s-6);
-  border-bottom: 1px solid rgba(239, 234, 224, 0.15);
-  margin-bottom: var(--s-6);
 }
 
-body > footer .footer-info p {
-  max-width: none;
-}
-
-body > footer .footer-info a {
+.footer-col-title {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
   color: var(--brass);
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.3s ease;
+  margin: 0 0 var(--s-4) 0;
+  padding: 0;
+  border: none;
+  display: block;
 }
 
-body > footer .footer-info a:hover {
-  border-color: var(--brass);
+.footer-col-title::before {
+  display: none;             /* anula el counter de numeración de h2 */
 }
 
-/* Bloque de créditos — editorial, con peso */
+.footer-col p {
+  font-family: var(--font-body);
+  font-size: var(--t-sm);
+  color: rgba(239, 234, 224, 0.85);
+  max-width: none;
+  margin: 0;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+}
+
+.footer-col a {
+  font-family: var(--font-body);
+  font-size: var(--t-sm);
+  color: rgba(239, 234, 224, 0.85);
+  text-decoration: none;
+  transition: color 0.3s ease, padding-left 0.3s ease;
+  display: inline-block;
+  width: fit-content;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+}
+
+.footer-col a:hover {
+  color: var(--brass);
+  padding-left: var(--s-2);
+}
+
+/* La columna 3: créditos — más editorial */
 .footer-credit {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25em;
-  text-align: left;
+  gap: 0;
 }
 
 .footer-credit .credit-label {
   font-family: var(--font-body);
-  font-size: 0.65rem;
-  font-weight: 500;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  color: var(--brass);
+  font-size: var(--t-sm);
+  color: rgba(239, 234, 224, 0.6);
+  margin: 0 0 var(--s-2) 0;
   max-width: none;
-  margin: 0;
 }
 
 .footer-credit .credit-name {
   font-family: var(--font-display);
-  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
   font-weight: 300;
   font-style: italic;
   letter-spacing: -0.02em;
@@ -1305,18 +1328,58 @@ body > footer .footer-info a:hover {
   font-variation-settings: 'opsz' 144, 'SOFT' 100;
   line-height: 1.1;
   max-width: none;
-  margin: 0;
+  margin: 0 0 var(--s-3) 0;
 }
 
 .footer-credit .credit-meta {
   font-family: var(--font-body);
-  font-size: var(--t-xs);
+  font-size: 0.65rem;
   font-weight: 500;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: rgba(239, 234, 224, 0.55);
-  margin: var(--s-2) 0 0 0;
+  color: rgba(239, 234, 224, 0.5);
+  margin: 0;
   max-width: none;
+}
+
+/* Barra inferior — copyright + volver arriba */
+.footer-bottom {
+  max-width: var(--container);
+  margin: clamp(2rem, 3vw, 2.5rem) auto 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+}
+
+.footer-bottom p {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(239, 234, 224, 0.45);
+  margin: 0;
+  max-width: none;
+}
+
+.footer-bottom .back-to-top {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--brass);
+  transition: color 0.3s ease, gap 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.footer-bottom .back-to-top:hover {
+  color: var(--paper);
+  gap: var(--s-3);
 }
 
 
@@ -1652,9 +1715,18 @@ body > footer .footer-info a:hover {
     font-size: clamp(2rem, 8vw, 2.8rem);
   }
 
-  /* FOOTER — créditos centrados y más respirables */
+  /* FOOTER en móvil: 1 columna, ítems apilados */
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: var(--s-6);
+  }
   .footer-credit .credit-name {
     font-size: 1.6rem;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--s-3);
   }
 
   /* WhatsApp flotante — más chico */
