@@ -686,39 +686,37 @@ body > header > p:last-child {
 }
 
 .vista-card {
-  position: relative;
   padding: var(--s-7) clamp(var(--s-4), 3vw, var(--s-7));
   display: flex;
   flex-direction: column;
   gap: var(--s-4);
-  overflow: hidden;
-  min-height: 360px;
+  position: relative;
 }
 
 .vista-card.vista-mountain {
   border-right: 1px solid var(--hairline);
-  color: var(--sage);
 }
 
 .vista-card.vista-city {
-  color: var(--terracotta);
   background: linear-gradient(180deg, transparent 0%, rgba(161, 75, 48, 0.04) 100%);
 }
 
-/* La ilustración SVG ocupa el fondo bajo del card */
+/*
+  El SVG es un elemento de bloque normal, NO absolute.
+  Lo ordenamos al final del card con flex `order`.
+  Tiene altura fija de 160px y se ve como una "firma" visual
+  al pie de cada columna.
+*/
 .vista-illustration {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  order: 10;                      /* último en la columna */
   width: 100%;
-  height: 60%;
-  pointer-events: none;
-  z-index: 0;
-  /* El SVG usa "currentColor" — toma el color del padre */
+  max-width: 360px;
+  height: 140px;
+  margin-top: var(--s-5);
+  display: block;
 }
 
-/* Para que mountain/city tengan sus propios colores en la ilustración */
+/* Los SVG usan "currentColor" — el color viene del padre */
 .vista-mountain .vista-illustration {
   color: var(--sage);
 }
@@ -728,17 +726,20 @@ body > header > p:last-child {
 }
 
 .vista-direction {
+  order: 1;
   font-family: var(--font-body);
   font-size: var(--t-xs);
   font-weight: 600;
   letter-spacing: 0.4em;
   text-transform: uppercase;
-  position: relative;
-  z-index: 1;
   margin-bottom: var(--s-3);
 }
 
+.vista-mountain .vista-direction { color: var(--sage); }
+.vista-city .vista-direction { color: var(--terracotta); }
+
 .vista-card h3 {
+  order: 2;
   font-size: clamp(2rem, 3.5vw, 3rem);
   font-style: italic;
   font-variation-settings: 'opsz' 144, 'SOFT' 100;
@@ -746,19 +747,16 @@ body > header > p:last-child {
   color: var(--ink);
   letter-spacing: -0.02em;
   line-height: 1;
-  position: relative;
-  z-index: 1;
   margin-top: var(--s-2);
 }
 
 .vista-card > p {
+  order: 3;
   font-family: var(--font-body);
   font-size: var(--t-base);
   color: var(--ink-soft);
-  max-width: 30ch;
+  max-width: 36ch;
   line-height: 1.6;
-  position: relative;
-  z-index: 1;
 }
 
 .vista-card > p strong {
@@ -904,13 +902,13 @@ body > header > p:last-child {
 /* ============================================================
    11 · ZONAS COMUNES
    ------------------------------------------------------------
-   Listado editorial tipo "carta de servicios". Cada item con
-   su número y un guion largo decorativo. Tipografía Fraunces
-   grande para que tenga peso visual.
+   Listado editorial con tipografía italiana grande, números
+   brass y guiones decorativos. Fondo claro paper-deep para
+   distinguirlo visualmente sin la pesadez del negro.
    ============================================================ */
 #zonas-comunes {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--paper-deep);
+  color: var(--ink);
   max-width: none;
   padding-left: clamp(1.5rem, 5vw, 5rem);
   padding-right: clamp(1.5rem, 5vw, 5rem);
@@ -923,14 +921,9 @@ body > header > p:last-child {
 }
 
 #zonas-comunes > h2 {
-  color: var(--paper);
   font-style: italic;
   font-variation-settings: 'opsz' 144, 'SOFT' 80;
-  border-bottom-color: rgba(239, 234, 224, 0.18);
-}
-
-#zonas-comunes > h2::before {
-  color: var(--brass);
+  border-bottom-color: var(--hairline);
 }
 
 #zonas-comunes ul {
@@ -943,11 +936,11 @@ body > header > p:last-child {
 
 #zonas-comunes li {
   font-family: var(--font-display);
-  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  font-size: clamp(1.3rem, 2vw, 1.8rem);
   font-weight: 300;
   letter-spacing: -0.01em;
   padding: var(--s-5) 0;
-  border-bottom: 1px solid rgba(239, 234, 224, 0.12);
+  border-bottom: 1px solid var(--hairline);
   display: flex;
   align-items: center;
   gap: var(--s-5);
@@ -955,8 +948,7 @@ body > header > p:last-child {
   transition: padding-left 0.4s var(--ease-out-quart),
               color 0.3s ease;
   counter-increment: amenity;
-  position: relative;
-  color: var(--paper);
+  color: var(--ink);
 }
 
 #zonas-comunes li::before {
@@ -974,17 +966,18 @@ body > header > p:last-child {
   content: '';
   flex: 1;
   height: 1px;
-  background: rgba(184, 145, 101, 0.2);
+  background: var(--hairline);
   margin-left: var(--s-3);
 }
 
 #zonas-comunes li:hover {
   padding-left: var(--s-3);
-  color: var(--brass);
+  color: var(--terracotta);
 }
 
 #zonas-comunes li:hover::after {
-  background: var(--brass);
+  background: var(--terracotta);
+  opacity: 0.5;
 }
 
 
@@ -1017,77 +1010,104 @@ body > header > p:last-child {
 /* ============================================================
    13 · CONTACTO
    ------------------------------------------------------------
-   Tipografía grande, declaración fuerte. Dos botones de acción.
+   Fondo claro paper-cool. Botones de acción con colores fuertes:
+   verde WhatsApp para la acción principal, outline oscuro para
+   email. Íconos SVG inline a la izquierda de cada texto.
    ============================================================ */
 #contacto {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--paper-cool);
+  color: var(--ink);
   max-width: none;
-  margin-top: var(--s-9);
   padding: clamp(5rem, 12vh, 9rem) clamp(1.5rem, 5vw, 5rem);
 }
 
 #contacto > h2,
 #contacto > p,
-#contacto > a {
+#contacto .contacto-actions {
   max-width: var(--container);
   margin-inline: auto;
 }
 
 #contacto > h2 {
-  color: var(--paper);
+  color: var(--ink);
   font-size: var(--t-2xl);
   max-width: 18ch;
   font-style: italic;
   font-variation-settings: 'opsz' 144, 'SOFT' 80;
-  border-bottom-color: rgba(239, 234, 224, 0.18);   /* hairline claro sobre dark */
-}
-
-#contacto > h2::before {
-  color: var(--brass);
 }
 
 #contacto > p {
   font-family: var(--font-display);
   font-size: var(--t-lg);
   font-weight: 300;
-  color: var(--paper-cool);
+  font-variation-settings: 'opsz' 144;
+  color: var(--ink-soft);
   margin-top: var(--s-6);
   margin-bottom: var(--s-6);
 }
 
 #contacto > p strong {
   font-weight: 400;
-  color: var(--paper);
+  color: var(--ink);
   font-style: italic;
 }
 
-#contacto > a {
-  display: block;
-  width: fit-content;
-  margin-top: var(--s-5);
-  padding: var(--s-5) var(--s-7);
+/* Contenedor flex para los botones */
+.contacto-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+  margin-top: var(--s-6);
+}
+
+/* Botón base */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-4) var(--s-6);
   font-family: var(--font-body);
   font-size: var(--t-sm);
   font-weight: 600;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--paper);
-  border: 1px solid var(--paper-cool);
-  background: transparent;
+  border: 1.5px solid transparent;
   transition: all 0.4s var(--ease-out-quart);
+  white-space: nowrap;
 }
 
-#contacto > a:first-of-type {
-  background: var(--terracotta);
-  border-color: var(--terracotta);
+.btn-icon {
+  width: 1.3em;
+  height: 1.3em;
+  flex-shrink: 0;
 }
 
-#contacto > a:hover {
-  background: var(--paper);
+/* WhatsApp — verde de marca, acción principal */
+.btn-whatsapp {
+  background: #25D366;
+  color: #ffffff;
+  border-color: #25D366;
+}
+
+.btn-whatsapp:hover {
+  background: #1ebd5b;
+  border-color: #1ebd5b;
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px -15px rgba(37, 211, 102, 0.5);
+}
+
+/* Email — outline oscuro, acción secundaria */
+.btn-email {
+  background: transparent;
   color: var(--ink);
-  border-color: var(--paper);
-  letter-spacing: 0.26em;
+  border-color: var(--ink);
+}
+
+.btn-email:hover {
+  background: var(--ink);
+  color: var(--paper);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px -15px rgba(22, 19, 16, 0.4);
 }
 
 
@@ -1263,11 +1283,11 @@ body > footer small {
     grid-template-columns: 1fr;
     min-height: auto;
     padding-bottom: clamp(5rem, 10vh, 7rem);
+    gap: var(--s-6);
   }
   .hero-media {
-    min-height: 50vh;
+    min-height: 45vh;
     order: -1;
-    margin-bottom: var(--s-5);
   }
   .hero-content {
     max-width: none;
@@ -1277,6 +1297,40 @@ body > footer small {
   }
   .hero-media::after {
     display: none;
+  }
+
+  /* Título más chico en móvil, evita desbordes */
+  .hero-title {
+    font-size: clamp(2.4rem, 9vw, 4.2rem);
+    letter-spacing: -0.025em;
+  }
+
+  /* Specs sin border-right (se rompía al envolver) — usamos gap */
+  .hero-specs {
+    gap: var(--s-3) var(--s-5);
+    padding: var(--s-4) 0;
+  }
+  .hero-specs li {
+    padding-right: 0;
+    margin-right: 0;
+    border-right: none;
+  }
+  .hero-specs li:not(:last-child)::after {
+    content: '·';
+    margin-left: var(--s-5);
+    color: var(--brass);
+  }
+
+  /* Precio más chico en móvil */
+  .hero-price strong {
+    font-size: clamp(2rem, 7vw, 3rem);
+  }
+
+  /* Botón con ancho hasta donde le dé el contenido */
+  .btn-primary,
+  #hero .btn-primary {
+    padding: var(--s-4) var(--s-5);
+    letter-spacing: 0.18em;
   }
 
   #caracteristicas ul {
@@ -1315,10 +1369,19 @@ body > footer small {
     grid-template-columns: 1fr;
   }
 
-  /* En móvil, sección numerada con número y h2 puede romperse */
+  /* Numeración: si el título es muy largo, permitir envolver */
   section:not(#hero) > h2 {
     flex-wrap: wrap;
     gap: var(--s-3);
+  }
+
+  /* Botones de contacto: en móvil cada uno ocupa su línea */
+  .contacto-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .btn {
+    justify-content: center;
   }
 
   .whatsapp-flotante {
