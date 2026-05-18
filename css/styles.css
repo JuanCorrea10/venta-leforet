@@ -973,6 +973,24 @@ body > header > p:last-child {
   display: block;
 }
 
+/*
+  Línea vertical fina que simula el borde derecho del plano.
+  La imagen original tiene un trazo negro de la pared del apartamento
+  en los 4 lados; al recortar perdimos el de la derecha.
+  Este pseudo-elemento lo reconstruye con CSS puro.
+*/
+.plano-trigger::after {
+  content: '';
+  position: absolute;
+  top: clamp(0.75rem, 2vw, 1.5rem);
+  bottom: clamp(0.75rem, 2vw, 1.5rem);
+  right: clamp(0.75rem, 2vw, 1.5rem);
+  width: 2px;
+  background: #1a140f;            /* match al negro de las paredes del plano */
+  z-index: 1;
+  pointer-events: none;
+}
+
 /* Caja con las specs correctas */
 .plano-specs {
   background: var(--paper-cool);
@@ -1136,6 +1154,19 @@ body > header > p:last-child {
   object-fit: cover;
   object-position: left center;
   display: block;
+}
+
+/* Misma línea simulada de borde derecho, también en el lightbox */
+.plano-lightbox-frame::after {
+  content: '';
+  position: absolute;
+  top: clamp(0.5rem, 2vw, 1.5rem);
+  bottom: clamp(0.5rem, 2vw, 1.5rem);
+  right: clamp(0.5rem, 2vw, 1.5rem);
+  width: 2px;
+  background: #1a140f;
+  z-index: 3;
+  pointer-events: none;
 }
 
 .lightbox-close {
