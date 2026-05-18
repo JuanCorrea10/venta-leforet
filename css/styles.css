@@ -947,8 +947,6 @@ body > header > p:last-child {
   display: block;
   position: relative;
   width: 100%;
-  aspect-ratio: 820 / 758;        /* recorte = visible solo el plan, no las specs */
-  overflow: hidden;                /* esto corta lo que sobra de la imagen */
   background: var(--paper-cool);
   padding: clamp(0.75rem, 2vw, 1.5rem);   /* matting cream alrededor de la imagen */
   border: 1px solid var(--hairline);
@@ -965,30 +963,39 @@ body > header > p:last-child {
               0 40px 70px -25px rgba(22, 19, 16, 0.25);
 }
 
-.plano-trigger img {
+/*
+  .plano-crop = el "ventana" que muestra solo el dibujo del plan.
+  Recorta AMBAS dimensiones de la imagen original (1135x758):
+  - Derecha: oculta las specs erróneas (3.5 baños, 2 parq)
+  - Abajo: oculta el espacio cremoso vacío que tiene la imagen original
+
+  Cómo: aspect-ratio 820/620 (la proporción de la zona ÚTIL),
+  overflow:hidden, e imagen sobredimensionada al 138.4% (= 1135/820)
+  posicionada absolute en la esquina top-left.
+*/
+.plano-crop {
+  position: relative;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: left center;   /* mantenemos la IZQUIERDA, cortamos derecha */
+  aspect-ratio: 820 / 620;
+  overflow: hidden;
+}
+
+.plano-crop img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% * 1135 / 820);  /* ≈138.4% — sobredimensiona horizontalmente */
+  height: auto;                     /* mantiene el aspect ratio natural de la imagen */
   display: block;
 }
 
-/*
-  Marco uniforme de 2px alrededor del plano.
-  La imagen original tiene un trazo negro fino en los 4 lados pero
-  con grosor variable. Al recortar la derecha, ese lado quedó sin
-  línea. Para que quede parejo, dibujamos UN marco propio de 2px
-  con CSS que tapa todos los trazos originales y los reemplaza
-  por un borde uniforme.
-*/
-.plano-trigger::after {
+/* Marco uniforme de 2px alrededor del plano visible (no más donde
+   estaba el espacio vacío). Replaza los trazos naturales del jpg. */
+.plano-crop::after {
   content: '';
   position: absolute;
-  top: clamp(0.75rem, 2vw, 1.5rem);
-  bottom: clamp(0.75rem, 2vw, 1.5rem);
-  left: clamp(0.75rem, 2vw, 1.5rem);
-  right: clamp(0.75rem, 2vw, 1.5rem);
-  border: 2px solid #1a140f;       /* match al negro de las paredes del plano */
+  inset: 0;
+  border: 2px solid #1a140f;
   pointer-events: none;
 }
 
@@ -1138,40 +1145,19 @@ body > header > p:last-child {
 }
 
 /*
-  Frame del plano en el lightbox: aplica el mismo recorte que en la
-  vista normal usando aspect-ratio + overflow:hidden + object-position.
-  Así NUNCA se ven las specs erróneas, ni siquiera al ampliar.
+  Frame del plano en el lightbox: envuelve el .plano-crop (que es
+  reutilizado del trigger normal) para que el recorte sea idéntico
+  en ambos lugares. El frame agrega solo el matting cream y la sombra.
 */
 .plano-lightbox-frame {
   position: relative;
   z-index: 2;
   max-width: 95vw;
   max-height: 85vh;
-  aspect-ratio: 820 / 758;
-  overflow: hidden;
+  width: min(900px, 95vw);          /* tamaño preferido del modal */
   background: var(--paper);
   padding: clamp(0.5rem, 2vw, 1.5rem);
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
-}
-
-.plano-lightbox-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: left center;
-  display: block;
-}
-
-/* Mismo marco uniforme de 2px en el lightbox */
-.plano-lightbox-frame::after {
-  content: '';
-  position: absolute;
-  top: clamp(0.5rem, 2vw, 1.5rem);
-  bottom: clamp(0.5rem, 2vw, 1.5rem);
-  left: clamp(0.5rem, 2vw, 1.5rem);
-  right: clamp(0.5rem, 2vw, 1.5rem);
-  border: 2px solid #1a140f;
-  pointer-events: none;
 }
 
 .lightbox-close {

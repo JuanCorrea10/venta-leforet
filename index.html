@@ -494,8 +494,15 @@
 
       <div class="plano-grid">
         <a href="#plano-zoom" class="plano-trigger" aria-label="Ver plano en pantalla completa">
-          <img src="assets/images/plano-distribucion.jpeg"
-               alt="Plano del apartamento 1605 mostrando 3 habitaciones, sala, comedor, cocina y terrazas">
+          <!--
+            .plano-crop hace el recorte en AMBAS dimensiones: derecha
+            (specs erróneas) y abajo (espacio cremoso vacío). Lleva
+            adentro la imagen sobredimensionada con overflow:hidden.
+          -->
+          <div class="plano-crop">
+            <img src="assets/images/plano-distribucion.jpeg"
+                 alt="Plano del apartamento 1605 mostrando 3 habitaciones, sala, comedor, cocina y terrazas">
+          </div>
           <span class="plano-hint">Tocar para ampliar</span>
         </a>
 
@@ -656,7 +663,7 @@
       <!-- Columna 2: Contacto -->
       <div class="footer-col">
         <h3 class="footer-col-title">Contacto</h3>
-        <p>Liliana Sánchez</p>
+        <p>Liliana Sánchez Guerrero</p>
         <a href="https://wa.me/573184095180" target="_blank" rel="noopener noreferrer">+57 318 409 5180</a>
         <a href="mailto:teita79@gmail.com">teita79@gmail.com</a>
       </div>
@@ -665,7 +672,7 @@
       <div class="footer-col footer-credit">
         <h3 class="footer-col-title">Créditos</h3>
         <p class="credit-label">Diseñado y desarrollado por</p>
-        <p class="credit-name">Juan Martín Correa</p>
+        <p class="credit-name">Juan Martín Correa Sánchez</p>
         <p class="credit-meta">Ibagué · 2026</p>
       </div>
     </div>
@@ -696,8 +703,10 @@
       recorte que en la vista normal: oculta las specs erróneas del lado derecho.
     -->
     <div class="plano-lightbox-frame">
-      <img src="assets/images/plano-distribucion.jpeg"
-           alt="Plano del apartamento 1605 ampliado">
+      <div class="plano-crop">
+        <img src="assets/images/plano-distribucion.jpeg"
+             alt="Plano del apartamento 1605 ampliado">
+      </div>
     </div>
     <a href="#" class="lightbox-close" aria-label="Cerrar plano">
       <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round">
