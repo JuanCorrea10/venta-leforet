@@ -795,6 +795,7 @@ body > header > p:last-child {
 .vista-city .vista-direction { color: var(--terracotta); }
 
 .vista-card h3 {
+  /* legacy — el h3 ya no se usa, lo reemplazó .vista-subject */
   font-size: clamp(1.6rem, 3vw, 2.4rem);
   font-style: italic;
   font-variation-settings: 'opsz' 144, 'SOFT' 100;
@@ -819,6 +820,31 @@ body > header > p:last-child {
   color: var(--ink);
 }
 
+/*
+  .vista-body es el párrafo de descripción (reemplazó al h3 + p).
+  Contiene la frase completa que la abuela escribió, con el subject
+  ('Zona Social', 'Habitaciones') visualmente destacado como título.
+*/
+.vista-card .vista-body {
+  font-family: var(--font-body);
+  font-size: var(--t-base);
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.vista-subject {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  font-variation-settings: 'opsz' 144, 'SOFT' 100;
+  display: block;
+  margin-bottom: var(--s-3);
+}
+
 
 /* ============================================================
    9 · GALERÍA
@@ -837,25 +863,34 @@ body > header > p:last-child {
   grid-column: 1 / -1;
 }
 
-/* La advertencia del apto modelo: nota editorial elegante */
-#galeria > p {
+/*
+  La nota del apto modelo: callout editorial con 3 párrafos.
+  El primer párrafo lleva el label "Nota ·" como pseudo-elemento.
+*/
+.galeria-nota {
+  grid-column: 1 / -1;
   max-width: var(--container-narrow);
   padding: var(--s-4) var(--s-5);
   background: var(--paper-deep);
   border-left: 3px solid var(--brass);
-  font-style: normal;
   margin-bottom: var(--s-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
 }
 
-#galeria > p em {
-  font-style: italic;
+.galeria-nota p {
   font-family: var(--font-display);
   font-size: var(--t-base);
   color: var(--ink-soft);
+  font-style: italic;
   font-variation-settings: 'opsz' 30;
+  max-width: none;
+  margin: 0;
+  line-height: 1.6;
 }
 
-#galeria > p em::before {
+.galeria-nota p:first-child::before {
   content: 'Nota · ';
   font-style: normal;
   font-family: var(--font-body);
@@ -2042,7 +2077,7 @@ body > footer {
     grid-template-columns: 1fr;
     gap: var(--s-3);
   }
-  #galeria > p em {
+  .galeria-nota p {
     font-size: 0.9rem;
   }
 
