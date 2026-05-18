@@ -216,36 +216,13 @@
 
       <article class="vista-card vista-mountain">
         <div class="vista-scene">
-          <svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
-            <!-- Cielo de mañana: gradiente crema cálido -->
-            <defs>
-              <linearGradient id="skyMorning" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#ede0c8"/>
-                <stop offset="100%" stop-color="#dfcfb0"/>
-              </linearGradient>
-            </defs>
-            <rect width="400" height="280" fill="url(#skyMorning)"/>
-
-            <!-- Sol naciente -->
-            <circle cx="310" cy="80" r="32" fill="#e8c794" opacity="0.5"/>
-            <circle cx="310" cy="80" r="22" fill="#d9a86b"/>
-
-            <!-- Pájaros lejanos -->
-            <path d="M80 90 q5 -4 10 0 q5 -4 10 0" stroke="#7a8366" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-            <path d="M150 70 q4 -3 8 0 q4 -3 8 0" stroke="#7a8366" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.7"/>
-
-            <!-- Montañas lejanas (3a capa, más claras) -->
-            <path d="M0 200 L60 150 L120 175 L180 140 L240 165 L320 130 L400 170 L400 280 L0 280 Z"
-                  fill="#a5ad8e" opacity="0.55"/>
-
-            <!-- Montañas medias (2a capa) -->
-            <path d="M0 225 L80 175 L140 200 L200 165 L260 195 L340 160 L400 195 L400 280 L0 280 Z"
-                  fill="#7a8366" opacity="0.85"/>
-
-            <!-- Montañas frente (1a capa, más oscuras) -->
-            <path d="M0 250 L60 215 L130 235 L200 205 L280 230 L360 200 L400 230 L400 280 L0 280 Z"
-                  fill="#5a6248"/>
-          </svg>
+          <!--
+            Foto real tomada desde el apartamento — antes acá había una
+            ilustración SVG. Las fotos reales son mucho más vendedoras:
+            muestran lo que el comprador REALMENTE va a ver.
+          -->
+          <img src="assets/images/vista-montana.jpeg"
+               alt="Vista a la cordillera Central desde el apartamento 1605, con vegetación tropical y montañas">
         </div>
         <div class="vista-info">
           <p class="vista-direction">Norte · Mañana</p>
@@ -256,146 +233,13 @@
 
       <article class="vista-card vista-city">
         <div class="vista-scene">
-          <svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
-            <!-- Cielo de atardecer: dusk púrpura-naranja -->
-            <defs>
-              <linearGradient id="skyDusk" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#3d2a35"/>
-                <stop offset="50%" stop-color="#7a4438"/>
-                <stop offset="100%" stop-color="#c5764a"/>
-              </linearGradient>
-            </defs>
-            <rect width="400" height="280" fill="url(#skyDusk)"/>
-
-            <!-- Luna -->
-            <circle cx="340" cy="55" r="14" fill="#f2e8d0" opacity="0.95"/>
-            <circle cx="336" cy="52" r="13" fill="#e6d8b5" opacity="0.6"/>
-
-            <!-- Estrellas -->
-            <circle cx="50" cy="35" r="1" fill="#fff" opacity="0.8"/>
-            <circle cx="110" cy="25" r="0.8" fill="#fff" opacity="0.6"/>
-            <circle cx="180" cy="50" r="1.2" fill="#fff" opacity="0.9"/>
-            <circle cx="240" cy="30" r="0.7" fill="#fff" opacity="0.5"/>
-            <circle cx="280" cy="60" r="1" fill="#fff" opacity="0.75"/>
-
-            <!-- Edificios silueta (oscuros) -->
-            <g fill="#1a0e0e">
-              <rect x="15" y="180" width="32" height="100"/>
-              <rect x="52" y="150" width="38" height="130"/>
-              <rect x="95" y="125" width="24" height="155"/>
-              <rect x="125" y="165" width="34" height="115"/>
-              <rect x="163" y="105" width="28" height="175"/>
-              <rect x="195" y="145" width="42" height="135"/>
-              <rect x="242" y="120" width="22" height="160"/>
-              <rect x="268" y="170" width="36" height="110"/>
-              <rect x="308" y="135" width="30" height="145"/>
-              <rect x="342" y="160" width="42" height="120"/>
-            </g>
-
-            <!-- Antena en el edificio más alto, para dar contexto urbano -->
-            <line x1="177" y1="105" x2="177" y2="92" stroke="#1a0e0e" stroke-width="1.5"/>
-
-            <!-- Ventanas iluminadas (esto es lo que dice "ciudad") -->
-            <g fill="#f4c764" opacity="0.95">
-              <!-- Edificio 1 -->
-              <rect x="22" y="195" width="3" height="4"/>
-              <rect x="29" y="195" width="3" height="4"/>
-              <rect x="36" y="195" width="3" height="4"/>
-              <rect x="22" y="210" width="3" height="4"/>
-              <rect x="36" y="210" width="3" height="4"/>
-              <rect x="29" y="225" width="3" height="4"/>
-              <rect x="36" y="240" width="3" height="4"/>
-              <!-- Edificio 2 -->
-              <rect x="58" y="165" width="3" height="4"/>
-              <rect x="68" y="165" width="3" height="4"/>
-              <rect x="78" y="165" width="3" height="4"/>
-              <rect x="58" y="180" width="3" height="4"/>
-              <rect x="68" y="195" width="3" height="4"/>
-              <rect x="78" y="210" width="3" height="4"/>
-              <rect x="58" y="225" width="3" height="4"/>
-              <!-- Edificio 3 (alto central) -->
-              <rect x="100" y="140" width="3" height="4"/>
-              <rect x="107" y="140" width="3" height="4"/>
-              <rect x="114" y="140" width="3" height="4"/>
-              <rect x="100" y="155" width="3" height="4"/>
-              <rect x="114" y="155" width="3" height="4"/>
-              <rect x="107" y="170" width="3" height="4"/>
-              <rect x="100" y="185" width="3" height="4"/>
-              <rect x="114" y="200" width="3" height="4"/>
-              <rect x="107" y="215" width="3" height="4"/>
-              <rect x="100" y="230" width="3" height="4"/>
-              <rect x="114" y="245" width="3" height="4"/>
-              <!-- Edificio 4 -->
-              <rect x="131" y="180" width="3" height="4"/>
-              <rect x="141" y="180" width="3" height="4"/>
-              <rect x="151" y="180" width="3" height="4"/>
-              <rect x="131" y="195" width="3" height="4"/>
-              <rect x="151" y="210" width="3" height="4"/>
-              <rect x="141" y="225" width="3" height="4"/>
-              <rect x="151" y="240" width="3" height="4"/>
-              <!-- Edificio 5 (el más alto) -->
-              <rect x="168" y="120" width="3" height="4"/>
-              <rect x="175" y="120" width="3" height="4"/>
-              <rect x="182" y="120" width="3" height="4"/>
-              <rect x="168" y="135" width="3" height="4"/>
-              <rect x="182" y="135" width="3" height="4"/>
-              <rect x="175" y="150" width="3" height="4"/>
-              <rect x="168" y="165" width="3" height="4"/>
-              <rect x="182" y="180" width="3" height="4"/>
-              <rect x="175" y="195" width="3" height="4"/>
-              <rect x="168" y="210" width="3" height="4"/>
-              <rect x="182" y="225" width="3" height="4"/>
-              <rect x="175" y="240" width="3" height="4"/>
-              <!-- Edificio 6 -->
-              <rect x="201" y="160" width="3" height="4"/>
-              <rect x="211" y="160" width="3" height="4"/>
-              <rect x="221" y="160" width="3" height="4"/>
-              <rect x="231" y="160" width="3" height="4"/>
-              <rect x="211" y="175" width="3" height="4"/>
-              <rect x="221" y="175" width="3" height="4"/>
-              <rect x="201" y="195" width="3" height="4"/>
-              <rect x="231" y="195" width="3" height="4"/>
-              <rect x="211" y="215" width="3" height="4"/>
-              <rect x="201" y="235" width="3" height="4"/>
-              <rect x="231" y="235" width="3" height="4"/>
-              <!-- Edificio 7 -->
-              <rect x="247" y="135" width="3" height="4"/>
-              <rect x="254" y="135" width="3" height="4"/>
-              <rect x="247" y="150" width="3" height="4"/>
-              <rect x="254" y="165" width="3" height="4"/>
-              <rect x="247" y="180" width="3" height="4"/>
-              <rect x="254" y="195" width="3" height="4"/>
-              <rect x="247" y="215" width="3" height="4"/>
-              <rect x="254" y="230" width="3" height="4"/>
-              <!-- Edificio 8 -->
-              <rect x="274" y="185" width="3" height="4"/>
-              <rect x="284" y="185" width="3" height="4"/>
-              <rect x="294" y="185" width="3" height="4"/>
-              <rect x="284" y="200" width="3" height="4"/>
-              <rect x="274" y="215" width="3" height="4"/>
-              <rect x="294" y="215" width="3" height="4"/>
-              <rect x="284" y="235" width="3" height="4"/>
-              <!-- Edificio 9 -->
-              <rect x="314" y="150" width="3" height="4"/>
-              <rect x="324" y="150" width="3" height="4"/>
-              <rect x="334" y="150" width="3" height="4"/>
-              <rect x="314" y="170" width="3" height="4"/>
-              <rect x="334" y="170" width="3" height="4"/>
-              <rect x="324" y="190" width="3" height="4"/>
-              <rect x="314" y="210" width="3" height="4"/>
-              <rect x="334" y="230" width="3" height="4"/>
-              <!-- Edificio 10 -->
-              <rect x="348" y="175" width="3" height="4"/>
-              <rect x="358" y="175" width="3" height="4"/>
-              <rect x="368" y="175" width="3" height="4"/>
-              <rect x="378" y="175" width="3" height="4"/>
-              <rect x="348" y="195" width="3" height="4"/>
-              <rect x="368" y="195" width="3" height="4"/>
-              <rect x="358" y="215" width="3" height="4"/>
-              <rect x="378" y="215" width="3" height="4"/>
-              <rect x="358" y="240" width="3" height="4"/>
-            </g>
-          </svg>
+          <!--
+            Foto real desde el balcón del apartamento — antes acá había
+            una ilustración SVG. La foto real muestra la vista que
+            REALMENTE va a tener el comprador desde el apto.
+          -->
+          <img src="assets/images/vista-ciudad.jpeg"
+               alt="Vista desde el balcón del apartamento 1605: edificios del sector El Vergel y montañas al fondo">
         </div>
         <div class="vista-info">
           <p class="vista-direction">Este · Atardecer</p>

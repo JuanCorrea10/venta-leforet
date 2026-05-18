@@ -746,10 +746,27 @@ body > header > p:last-child {
   position: relative;
 }
 
-.vista-scene svg {
+.vista-scene svg,
+.vista-scene img {
   width: 100%;
   height: 100%;
   display: block;
+}
+
+/* La foto real tiene proporciones distintas que el viewport del SVG
+   — usamos object-fit:cover para que llene sin distorsión */
+.vista-scene img {
+  object-fit: cover;
+  object-position: center;
+  filter: contrast(0.97) saturate(1.05);   /* sutil ajuste cinemático */
+  transition: transform 0.7s var(--ease-out-quart),
+              filter 0.7s var(--ease-out-quart);
+}
+
+/* Sutil zoom-in al hover (en la card padre) */
+.vista-card:hover .vista-scene img {
+  transform: scale(1.04);
+  filter: contrast(1) saturate(1.12);
 }
 
 /* Anula los styles globales (que ponen color sage/terracotta) */
