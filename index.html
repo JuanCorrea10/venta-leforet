@@ -483,17 +483,59 @@
          ============================================================ -->
     <section id="plano" aria-labelledby="plano-titulo">
       <h2 id="plano-titulo">Plano de distribución</h2>
+
       <!--
-        Wrap del plano en un <a> con href="#plano-zoom".
-        Al tocarlo se abre el modal (lightbox) que vive abajo de </main>.
-        Truco CSS: el modal usa la pseudo-clase :target — se muestra
-        cuando la URL termina con #plano-zoom. Sin JavaScript.
+        El plano oficial del edificio (foto JPEG) tiene specs del modelo
+        genérico — 3.5 baños, 2 parqueaderos. Pero el 1605 específicamente
+        tiene 2.5 baños y 1 parqueadero. Para evitar confusión:
+        - Recortamos la imagen con CSS para mostrar solo el dibujo del plan
+        - Al lado ponemos una caja con las specs CORRECTAS del 1605
       -->
-      <a href="#plano-zoom" class="plano-trigger" aria-label="Ver plano en pantalla completa">
-        <img src="assets/images/plano-distribucion.jpeg"
-             alt="Plano del apartamento 1605 mostrando distribución de 3 habitaciones, 2.5 baños, sala, comedor, cocina y terraza">
-        <span class="plano-hint">Tocar para ampliar</span>
-      </a>
+
+      <div class="plano-grid">
+        <a href="#plano-zoom" class="plano-trigger" aria-label="Ver plano en pantalla completa">
+          <img src="assets/images/plano-distribucion.jpeg"
+               alt="Plano del apartamento 1605 mostrando 3 habitaciones, sala, comedor, cocina y terrazas">
+          <span class="plano-hint">Tocar para ampliar</span>
+        </a>
+
+        <aside class="plano-specs">
+          <p class="specs-eyebrow">Dependencias del 1605</p>
+
+          <div class="specs-areas">
+            <div>
+              <strong>136,16 m²</strong>
+              <span>Área construida</span>
+            </div>
+            <div>
+              <strong>116,64 m²</strong>
+              <span>Área privada</span>
+            </div>
+            <div>
+              <strong>31,29 m²</strong>
+              <span>Área terraza</span>
+            </div>
+            <div>
+              <strong>167,45 m²</strong>
+              <span>Total</span>
+            </div>
+          </div>
+
+          <ul class="specs-list">
+            <li>3 habitaciones</li>
+            <li>2,5 baños</li>
+            <li>Vestier en habitación principal</li>
+            <li>Espacio flexible / estudio o alcoba 4</li>
+            <li>Sala / comedor</li>
+            <li>Cocina integrada</li>
+            <li>Cuarto de ropas</li>
+            <li>Hall de acceso</li>
+            <li>2 terrazas</li>
+            <li>1 parqueadero</li>
+            <li>1 depósito</li>
+          </ul>
+        </aside>
+      </div>
     </section>
 
     <!-- ============================================================
@@ -649,8 +691,14 @@
        ============================================================ -->
   <div class="lightbox" id="plano-zoom" role="dialog" aria-modal="true" aria-label="Plano en pantalla completa">
     <a href="#" class="lightbox-backdrop" aria-label="Cerrar"></a>
-    <img src="assets/images/plano-distribucion.jpeg"
-         alt="Plano del apartamento 1605 ampliado">
+    <!--
+      El plano se envuelve en .plano-lightbox-frame para aplicar el mismo
+      recorte que en la vista normal: oculta las specs erróneas del lado derecho.
+    -->
+    <div class="plano-lightbox-frame">
+      <img src="assets/images/plano-distribucion.jpeg"
+           alt="Plano del apartamento 1605 ampliado">
+    </div>
     <a href="#" class="lightbox-close" aria-label="Cerrar plano">
       <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round">
         <line x1="6" y1="6" x2="18" y2="18"/>

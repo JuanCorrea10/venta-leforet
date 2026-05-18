@@ -912,10 +912,16 @@ body > header > p:last-child {
 
 
 /* ============================================================
-   10 · PLANO (con lightbox al tocar)
+   10 · PLANO (con recorte de specs incorrectas + caja propia)
    ------------------------------------------------------------
-   Trigger clickeable que abre el plano en pantalla completa.
-   El plano se contiene al ancho del container, no desborda en móvil.
+   La imagen del plano oficial tiene specs incorrectas para el 1605.
+   En vez de editarla en Photoshop, usamos CSS para mostrar solo el
+   dibujo del plan y al lado una caja con las specs correctas.
+
+   Cómo se recorta: el contenedor tiene aspect-ratio (820/758) más
+   "cuadrado" que la imagen original (1135/758). Con object-fit:cover
+   + object-position:left, la imagen se ajusta a la altura y los
+   ~315px sobrantes a la derecha quedan cropped por overflow:hidden.
    ============================================================ */
 #plano {
   text-align: center;
@@ -926,18 +932,28 @@ body > header > p:last-child {
   text-align: left;
 }
 
+/* Grid de 2 columnas: imagen + caja de specs */
+.plano-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: start;
+  max-width: var(--container);
+  margin: var(--s-6) auto 0;
+  text-align: left;
+}
+
 .plano-trigger {
   display: block;
   position: relative;
-  width: 100%;                    /* clave: no usar max-width sin width — desbordaba en móvil */
-  max-width: var(--container-narrow);
-  margin: var(--s-6) auto 0;
+  width: 100%;
+  aspect-ratio: 820 / 758;        /* recorte = visible solo el plan, no las specs */
+  overflow: hidden;                /* esto corta lo que sobra de la imagen */
   background: var(--paper-cool);
-  padding: clamp(0.75rem, 3vw, 2.5rem);
   border: 1px solid var(--hairline);
+  cursor: zoom-in;
   box-shadow: 0 1px 0 var(--hairline-mt),
               0 30px 60px -30px rgba(22, 19, 16, 0.15);
-  cursor: zoom-in;
   transition: transform 0.4s var(--ease-out-quart),
               box-shadow 0.4s var(--ease-out-quart);
 }
@@ -950,8 +966,91 @@ body > header > p:last-child {
 
 .plano-trigger img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+  object-position: left center;   /* mantenemos la IZQUIERDA, cortamos derecha */
   display: block;
+}
+
+/* Caja con las specs correctas */
+.plano-specs {
+  background: var(--paper-cool);
+  padding: clamp(var(--s-5), 3vw, var(--s-6)) clamp(var(--s-5), 3vw, var(--s-6));
+  border: 1px solid var(--hairline);
+  box-shadow: 0 1px 0 var(--hairline-mt),
+              0 20px 50px -30px rgba(22, 19, 16, 0.12);
+}
+
+.specs-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin: 0 0 var(--s-5) 0;
+  max-width: none;
+}
+
+/* Grid 2x2 con áreas en metros² */
+.specs-areas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-4);
+  padding-bottom: var(--s-5);
+  border-bottom: 1px solid var(--hairline);
+  margin-bottom: var(--s-5);
+}
+
+.specs-areas div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+}
+
+.specs-areas strong {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  font-variation-settings: 'opsz' 144, 'SOFT' 100;
+  line-height: 1;
+}
+
+.specs-areas span {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+/* Lista de dependencias con guion brass */
+.specs-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.specs-list li {
+  font-family: var(--font-display);
+  font-size: var(--t-base);
+  font-weight: 300;
+  color: var(--ink-soft);
+  font-variation-settings: 'opsz' 144, 'SOFT' 30;
+  padding-left: var(--s-4);
+  position: relative;
+  line-height: 1.4;
+}
+
+.specs-list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--brass);
 }
 
 .plano-hint {
@@ -1013,17 +1112,29 @@ body > header > p:last-child {
   cursor: zoom-out;
 }
 
-.lightbox img {
+/*
+  Frame del plano en el lightbox: aplica el mismo recorte que en la
+  vista normal usando aspect-ratio + overflow:hidden + object-position.
+  Así NUNCA se ven las specs erróneas, ni siquiera al ampliar.
+*/
+.plano-lightbox-frame {
   position: relative;
   z-index: 2;
   max-width: 95vw;
   max-height: 85vh;
-  width: auto;
-  height: auto;
-  object-fit: contain;
+  aspect-ratio: 820 / 758;
+  overflow: hidden;
   background: var(--paper);
   padding: clamp(0.5rem, 2vw, 1.5rem);
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+
+.plano-lightbox-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: left center;
+  display: block;
 }
 
 .lightbox-close {
@@ -1580,6 +1691,11 @@ body > footer {
     gap: var(--s-3);
   }
 
+  /* Plano + caja de specs: apilados en tablet/móvil */
+  .plano-grid {
+    grid-template-columns: 1fr;
+  }
+
   .contacto-actions {
     flex-direction: column;
     align-items: stretch;
@@ -1717,9 +1833,13 @@ body > footer {
     font-size: 0.9rem;
   }
 
-  /* PLANO — padding interno mínimo en celu */
-  #plano > img {
-    padding: var(--s-3);
+  /* PLANO en móvil: áreas en una columna para que respiren */
+  .specs-areas {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-3);
+  }
+  .plano-specs {
+    padding: var(--s-5) var(--s-4);
   }
 
   /* ZONAS COMUNES — items más compactos */
