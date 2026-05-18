@@ -1024,7 +1024,7 @@ body > header > p:last-child {
   max-width: none;
 }
 
-/* Grid 2x2 con áreas en metros² */
+/* Grid 2-col con 2 áreas individuales arriba y Total full-width abajo */
 .specs-areas {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1034,10 +1034,24 @@ body > header > p:last-child {
   margin-bottom: var(--s-5);
 }
 
-.specs-areas div {
+.specs-areas > div {
   display: flex;
   flex-direction: column;
   gap: 0.25em;
+}
+
+/* El Total se destaca: ocupa toda la fila, centrado, con separador arriba */
+.specs-areas-total {
+  grid-column: 1 / -1;
+  align-items: center;
+  text-align: center;
+  border-top: 1px solid var(--hairline);
+  padding-top: var(--s-4);
+  margin-top: var(--s-2);
+}
+
+.specs-areas-total strong {
+  font-size: clamp(1.4rem, 2.5vw, 1.8rem) !important;
 }
 
 .specs-areas strong {
