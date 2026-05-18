@@ -1016,34 +1016,22 @@ body > header > p:last-child {
 }
 
 /*
-  .plano-crop = el "ventana" que muestra solo el dibujo del plan.
-  Recorta AMBAS dimensiones de la imagen original (1135x758):
-  - Derecha: oculta las specs erróneas (3.5 baños, 2 parq)
-  - Abajo: oculta el espacio cremoso vacío que tiene la imagen original
-
-  Cómo: aspect-ratio 820/620 (la proporción de la zona ÚTIL),
-  overflow:hidden, e imagen sobredimensionada al 138.4% (= 1135/820)
-  posicionada absolute en la esquina top-left.
+  .plano-crop ahora es solo un wrapper simple: la imagen viene
+  pre-recortada (sin specs falsas ni espacio vacío), así que
+  ya NO necesitamos el hack de sobredimensionarla.
 */
 .plano-crop {
   position: relative;
   width: 100%;
-  aspect-ratio: 820 / 620;
-  overflow: hidden;
 }
 
 .plano-crop img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: calc(100% * 1135 / 820);  /* ≈138.4% — sobredimensiona horizontalmente */
-  max-width: none;                  /* IMPORTANTE: sobreescribe el max-width:100% global */
-  height: auto;                     /* mantiene el aspect ratio natural de la imagen */
+  width: 100%;
+  height: auto;
   display: block;
 }
 
-/* Marco uniforme de 2px alrededor del plano visible (no más donde
-   estaba el espacio vacío). Replaza los trazos naturales del jpg. */
+/* Marco fino alrededor de la imagen, sigue dando look "lámina" */
 .plano-crop::after {
   content: '';
   position: absolute;
