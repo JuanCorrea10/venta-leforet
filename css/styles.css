@@ -1037,6 +1037,7 @@ body > header > p:last-child {
   top: 0;
   left: 0;
   width: calc(100% * 1135 / 820);  /* ≈138.4% — sobredimensiona horizontalmente */
+  max-width: none;                  /* IMPORTANTE: sobreescribe el max-width:100% global */
   height: auto;                     /* mantiene el aspect ratio natural de la imagen */
   display: block;
 }
