@@ -2157,10 +2157,10 @@ body > footer {
 
 
 /* ============================================================
-   19 · GALERÍA LIGHTBOX (modal con navegación)
+   19 · GALERÍA — CARRUSEL A PANTALLA COMPLETA
    ------------------------------------------------------------
-   Modal a pantalla completa con flechas prev/next.
-   Manejado 100% por JavaScript.
+   Modal con un carrusel: swipe en celu, flechas en compu y
+   miniaturas abajo. Las slides las arma el JS.
    ============================================================ */
 .gallery-lightbox {
   position: fixed;
@@ -2190,34 +2190,104 @@ body > footer {
   cursor: zoom-out;
 }
 
-/* La "escena" donde vive la imagen */
+/* La "escena": carrusel + texto + miniaturas, uno abajo del otro */
 .gallery-lightbox-stage {
   position: relative;
   z-index: 2;
-  max-width: 90vw;
-  max-height: 85vh;
-  margin: 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--s-4);
-  pointer-events: none;            /* dejamos pasar clicks al backdrop salvo en la imagen */
+  pointer-events: none;            /* los clicks en los huecos pasan al backdrop (cierra) */
 }
 
-.gallery-lightbox-img {
+/*
+  LA PISTA DEL CARRUSEL — acá está todo el truco.
+  Es una fila de fotos (flex) con scroll horizontal. scroll-snap
+  hace que al soltar el dedo el scroll siempre "encaje" en una
+  foto entera, nunca a mitad de camino. El navegador se encarga
+  del swipe, la inercia y la animación: cero JS para eso.
+*/
+.gallery-carousel {
+  width: 100%;
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;   /* x = horizontal, mandatory = siempre encaja */
+  overscroll-behavior-x: contain;  /* que el swipe no dispare el "atrás" del navegador */
+  scrollbar-width: none;           /* sin barra de scroll (Firefox) */
+  pointer-events: auto;
+}
+
+.gallery-carousel::-webkit-scrollbar {
+  display: none;                   /* sin barra de scroll (Chrome, Safari) */
+}
+
+/* Cada slide ocupa el 100% del ancho: se ve una foto a la vez */
+.gallery-slide {
+  flex: 0 0 100%;
+  height: 62vh;
+  height: 62dvh;                   /* dvh = alto visible real en celu (sin la barra del navegador) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;        /* un swipe = una foto, aunque sea un swipe rápido */
+}
+
+.gallery-slide img {
   max-width: 100%;
-  max-height: 75vh;
-  width: auto;
-  height: auto;
+  max-height: 100%;
   object-fit: contain;
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
-  pointer-events: auto;
   background: var(--ink);
-  transition: opacity 0.25s ease;
+  user-select: none;
 }
 
-.gallery-lightbox-img.swapping {
-  opacity: 0;
+/* Miniaturas: fila con scroll propio si no entran todas */
+.gallery-thumbs {
+  position: relative;              /* referencia para centrar la miniatura activa (JS) */
+  display: flex;
+  gap: var(--s-2);
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 4px;                    /* espacio para que el borde de la activa no se corte */
+  scrollbar-width: none;
+  pointer-events: auto;
+}
+
+.gallery-thumbs::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery-thumb {
+  flex: 0 0 auto;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  opacity: 0.4;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: opacity 0.3s ease, outline-color 0.3s ease;
+}
+
+.gallery-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-thumb:hover {
+  opacity: 0.75;
+}
+
+.gallery-thumb.is-active {
+  opacity: 1;
+  outline-color: var(--brass);
 }
 
 .gallery-lightbox-meta {
@@ -2324,11 +2394,25 @@ body > footer {
     width: 42px;
     height: 42px;
   }
+  /* En celu las flechas quedan ENCIMA de la foto: fondo oscuro
+     para que se vean aunque la foto sea clara */
+  .gallery-lightbox-nav {
+    background: rgba(22, 19, 16, 0.45);
+  }
   .gallery-lightbox-caption {
     font-size: var(--t-base);
   }
-  .gallery-lightbox-stage {
-    max-width: 95vw;
+  /* Sin margen a los costados: la foto usa todo el ancho de la pantalla */
+  .gallery-lightbox {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .gallery-thumbs {
+    padding: 4px var(--s-4);
+  }
+  .gallery-thumb {
+    width: 44px;
+    height: 44px;
   }
 }
 

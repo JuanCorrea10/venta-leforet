@@ -175,15 +175,22 @@ if (planoTrigger && planoLightbox) {
 
 
 /* ============================================================
-   6 · GALERÍA LIGHTBOX
+   6 · GALERÍA — CARRUSEL A PANTALLA COMPLETA
    ------------------------------------------------------------
-   Click en una foto → se abre en pantalla completa.
-   Flechas ← → o botones para navegar entre fotos.
-   ESC para cerrar.
+   Click en una foto → se abre un carrusel con todas las fotos.
+   - Celu: deslizar con el dedo (swipe).
+   - Compu: flechas en pantalla o ← → del teclado.
+   - Miniaturas abajo para saltar directo a una foto.
+   ESC, la X o click en el fondo para cerrar.
+
+   El swipe NO lo programamos: lo hace el CSS (scroll-snap, ver
+   sección 19 de styles.css). Acá solo armamos las slides, movemos
+   el scroll con los botones y averiguamos qué foto se está viendo.
    ============================================================ */
 const galleryFigures = Array.from(document.querySelectorAll('#galeria figure'));
 const galleryLightbox = document.getElementById('gallery-lightbox');
-const lightboxImg = galleryLightbox.querySelector('.gallery-lightbox-img');
+const carouselTrack = galleryLightbox.querySelector('.gallery-carousel');
+const thumbsStrip = galleryLightbox.querySelector('.gallery-thumbs');
 const lightboxCaption = galleryLightbox.querySelector('.gallery-lightbox-caption');
 const lightboxCounter = galleryLightbox.querySelector('.gallery-lightbox-counter');
 const lightboxCloseBtn = galleryLightbox.querySelector('.gallery-lightbox-close');
@@ -191,14 +198,77 @@ const lightboxPrevBtn = galleryLightbox.querySelector('.gallery-lightbox-prev');
 const lightboxNextBtn = galleryLightbox.querySelector('.gallery-lightbox-next');
 const lightboxBackdrop = galleryLightbox.querySelector('.gallery-lightbox-backdrop');
 
+// Si la persona pidió "menos movimiento" en su sistema, saltamos sin animar
+const scrollAnimation = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+
 let currentLightboxIndex = 0;
 
-function openGalleryLightbox(index) {
+// Armamos una slide y una miniatura por cada foto de la galería.
+// Así, si mañana se agrega o cambia una foto en el HTML, el carrusel
+// se actualiza solo — no hay que tocar nada acá.
+const thumbButtons = galleryFigures.map((fig, index) => {
+  const img = fig.querySelector('img');
+  const caption = fig.querySelector('figcaption');
+
+  const slide = document.createElement('div');
+  slide.className = 'gallery-slide';
+  const slideImg = img.cloneNode();     // copia del <img> (mismo src y alt)
+  slideImg.draggable = false;           // que en compu no se "arrastre" la foto
+  slide.append(slideImg);
+  carouselTrack.append(slide);
+
+  const thumb = document.createElement('button');
+  thumb.className = 'gallery-thumb';
+  thumb.setAttribute('aria-label', `Ver foto ${index + 1}${caption ? ': ' + caption.textContent : ''}`);
+  thumb.append(img.cloneNode());
+  thumb.addEventListener('click', () => goToSlide(index));
+  thumbsStrip.append(thumb);
+  return thumb;
+});
+
+// Mueve el scroll de la pista hasta la slide pedida.
+// Cada slide mide lo mismo que la pista, entonces la slide N
+// empieza en N × ancho.
+function goToSlide(index, behavior = scrollAnimation) {
+  carouselTrack.scrollTo({ left: index * carouselTrack.clientWidth, behavior });
+}
+
+// Actualiza contador, texto y miniatura activa
+function updateLightboxMeta(index) {
   currentLightboxIndex = index;
-  updateLightboxImage();
+  const caption = galleryFigures[index].querySelector('figcaption');
+  lightboxCaption.textContent = caption ? caption.textContent : '';
+  lightboxCounter.textContent = `${index + 1} / ${galleryFigures.length}`;
+
+  thumbButtons.forEach((thumb, i) => {
+    thumb.classList.toggle('is-active', i === index);
+    thumb.toggleAttribute('aria-current', i === index);
+  });
+
+  // Centrar la miniatura activa en su fila (por si no entran todas)
+  const active = thumbButtons[index];
+  thumbsStrip.scrollTo({
+    left: active.offsetLeft - (thumbsStrip.clientWidth - active.offsetWidth) / 2,
+    behavior: scrollAnimation,
+  });
+}
+
+// ¿Qué foto se está viendo? La calculamos con la posición del scroll:
+// funciona igual si llegaste con swipe, flecha, teclado o miniatura.
+// Math.round = la foto cambia cuando pasaste la mitad del camino.
+carouselTrack.addEventListener('scroll', () => {
+  const index = Math.round(carouselTrack.scrollLeft / carouselTrack.clientWidth);
+  if (index !== currentLightboxIndex && galleryFigures[index]) {
+    updateLightboxMeta(index);
+  }
+});
+
+function openGalleryLightbox(index) {
   galleryLightbox.classList.add('open');
   document.body.style.overflow = 'hidden';
   lenis.stop();                   // pausar smooth scroll mientras el modal está abierto
+  goToSlide(index, 'auto');       // 'auto' = aparecer directo en la foto tocada, sin "viajar"
+  updateLightboxMeta(index);
 }
 
 function closeGalleryLightbox() {
@@ -207,35 +277,17 @@ function closeGalleryLightbox() {
   lenis.start();
 }
 
-function updateLightboxImage() {
-  const fig = galleryFigures[currentLightboxIndex];
-  const img = fig.querySelector('img');
-  const caption = fig.querySelector('figcaption');
-
-  // Pequeña animación de "swap": fade out → cambiar src → fade in
-  lightboxImg.classList.add('swapping');
-  setTimeout(() => {
-    lightboxImg.src = img.src;
-    lightboxImg.alt = img.alt;
-    lightboxCaption.textContent = caption ? caption.textContent : '';
-    lightboxCounter.textContent = `${currentLightboxIndex + 1} / ${galleryFigures.length}`;
-    lightboxImg.classList.remove('swapping');
-  }, 150);
-}
-
 function lightboxNext() {
   // operador % (módulo): si llega al final, vuelve al principio
-  currentLightboxIndex = (currentLightboxIndex + 1) % galleryFigures.length;
-  updateLightboxImage();
+  goToSlide((currentLightboxIndex + 1) % galleryFigures.length);
 }
 
 function lightboxPrev() {
   // sumamos el length antes de hacer % para evitar negativos
-  currentLightboxIndex = (currentLightboxIndex - 1 + galleryFigures.length) % galleryFigures.length;
-  updateLightboxImage();
+  goToSlide((currentLightboxIndex - 1 + galleryFigures.length) % galleryFigures.length);
 }
 
-// Click en cada figure abre el lightbox
+// Click en cada figure abre el carrusel en esa foto
 galleryFigures.forEach((fig, index) => {
   fig.addEventListener('click', () => openGalleryLightbox(index));
 });
@@ -246,10 +298,22 @@ lightboxPrevBtn.addEventListener('click', lightboxPrev);
 lightboxNextBtn.addEventListener('click', lightboxNext);
 lightboxBackdrop.addEventListener('click', closeGalleryLightbox);
 
-// Teclado: ESC, ← y → solo cuando el lightbox está abierto
+// Click en el espacio vacío al costado de la foto también cierra
+// (la slide ocupa todo el ancho, así que tapa el backdrop)
+carouselTrack.addEventListener('click', (e) => {
+  if (e.target.classList.contains('gallery-slide')) closeGalleryLightbox();
+});
+
+// Si se gira el celu o cambia el tamaño de la ventana, cambia el ancho
+// de las slides: re-ubicamos el scroll en la foto que se estaba viendo
+window.addEventListener('resize', () => {
+  if (galleryLightbox.classList.contains('open')) goToSlide(currentLightboxIndex, 'auto');
+});
+
+// Teclado: ESC, ← y → solo cuando el carrusel está abierto
 document.addEventListener('keydown', (e) => {
   if (!galleryLightbox.classList.contains('open')) return;
   if (e.key === 'Escape') closeGalleryLightbox();
-  if (e.key === 'ArrowLeft') lightboxPrev();
-  if (e.key === 'ArrowRight') lightboxNext();
+  if (e.key === 'ArrowLeft') { e.preventDefault(); lightboxPrev(); }
+  if (e.key === 'ArrowRight') { e.preventDefault(); lightboxNext(); }
 });
