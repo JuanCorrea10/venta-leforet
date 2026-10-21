@@ -57,7 +57,13 @@
 
 ### Fachada / exterior
 - `fachada-render.png` — render oficial del edificio
-- `fachada-construccion.jpeg` — foto real del edificio en obra (30 abr 2026)
+- `fachada-arboles.jpeg` — foto real del edificio terminado (oct 2026) — es la del hero y la del preview de WhatsApp
+- `fachada-torre.jpeg` — torre completa vista desde la calle (oct 2026)
+
+### Edificio hoy — zonas comunes y vistas (fotos reales, 21 oct 2026)
+- `piscina-adultos.jpeg`, `piscina-ninos.jpeg`, `piscina-zona-verde.jpeg`
+- `lobby.jpeg`, `salon-social.jpeg`, `terraza-exterior.jpeg`
+- `vista-balcon-montana.jpeg`, `vista-balcon-ciudad.jpeg`
 
 ### Plano
 - `plano-distribucion.jpeg` — plano de distribución del apto

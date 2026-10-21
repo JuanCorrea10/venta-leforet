@@ -310,9 +310,9 @@ body > header > p:last-child {
   /*
     object-position: center top
     Ancla la imagen al TOP del viewport. Como la foto es vertical
-    (1200x1600), al cortar para encajar en cualquier viewport, el
-    recorte se hace de abajo. Así el timestamp ("30 abr 2026 · Azure")
-    en la esquina inferior derecha queda fuera del área visible.
+    (960x1280), al cortar para encajar en cualquier viewport, el
+    recorte se hace de abajo. Así siempre se ve el cielo y la parte
+    alta de la torre, y lo que se pierde es la base (reja de la piscina).
   */
   object-position: center top;
   transform-origin: center top;         /* el zoom pivota desde arriba */
@@ -902,6 +902,24 @@ body > header > p:last-child {
   margin-right: var(--s-3);
 }
 
+/*
+  Subtítulo "El edificio hoy": separa las fotos del apto modelo de las
+  fotos reales del edificio. grid-column 1 / -1 = ocupa la fila entera,
+  así las fotos de abajo arrancan en una fila nueva.
+*/
+.galeria-subtitulo {
+  grid-column: 1 / -1;
+  margin: var(--s-7) 0 0;
+  padding-top: var(--s-6);
+  border-top: 1px solid var(--hairline);
+}
+
+.galeria-subnota {
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+  margin: 0 0 var(--s-2);
+}
+
 #galeria figure {
   grid-column: span 2;
   margin: 0;
@@ -911,17 +929,29 @@ body > header > p:last-child {
 
 /*
   Tamaños variados — rompemos la monotonía.
-  La primer foto es "hero" más grande, la otra ancha media.
+  El grid tiene 6 columnas: cada fila tiene que sumar 6 o queda un
+  hueco. Las fotos que no aparecen acá usan el span 2 de arriba.
+
+  Apto modelo (fotos 1–8):        Edificio hoy (fotos 9–17):
+    fila 1: 4 + 2                   fila 1: 4 + 2
+    fila 2: 3 + 3                   fila 2: 3 + 3
+    fila 3: 2 + 4  (espejo)         fila 3: 2 + 2 + 2
+    fila 4: 3 + 3                   fila 4: 3 + 3
+
+  :nth-of-type cuenta solo los <figure>, por eso el <h3> y el <p>
+  del subtítulo no corren la numeración.
 */
-#galeria figure:nth-of-type(1) { grid-column: span 4; }
-#galeria figure:nth-of-type(2) { grid-column: span 2; }
-#galeria figure:nth-of-type(3) { grid-column: span 3; }
-#galeria figure:nth-of-type(4) { grid-column: span 3; }
-#galeria figure:nth-of-type(5) { grid-column: span 2; }
-#galeria figure:nth-of-type(6) { grid-column: span 2; }
-#galeria figure:nth-of-type(7) { grid-column: span 2; }
-#galeria figure:nth-of-type(8) { grid-column: span 3; }
-#galeria figure:nth-of-type(9) { grid-column: span 3; }
+#galeria figure:nth-of-type(1)  { grid-column: span 4; }
+#galeria figure:nth-of-type(3)  { grid-column: span 3; }
+#galeria figure:nth-of-type(4)  { grid-column: span 3; }
+#galeria figure:nth-of-type(6)  { grid-column: span 4; }
+#galeria figure:nth-of-type(7)  { grid-column: span 3; }
+#galeria figure:nth-of-type(8)  { grid-column: span 3; }
+#galeria figure:nth-of-type(9)  { grid-column: span 4; }
+#galeria figure:nth-of-type(11) { grid-column: span 3; }
+#galeria figure:nth-of-type(12) { grid-column: span 3; }
+#galeria figure:nth-of-type(16) { grid-column: span 3; }
+#galeria figure:nth-of-type(17) { grid-column: span 3; }
 
 #galeria figure img {
   width: 100%;
@@ -1906,17 +1936,19 @@ body > footer {
   #galeria {
     grid-template-columns: repeat(2, 1fr);
   }
+  /* nth-of-type(n) = "todos los figure", con la misma fuerza que
+     nth-of-type(1), (2)... así pisa los tamaños de compu sin
+     tener que listar las 17 fotos una por una. */
   #galeria figure,
-  #galeria figure:nth-of-type(1),
-  #galeria figure:nth-of-type(2),
-  #galeria figure:nth-of-type(3),
-  #galeria figure:nth-of-type(4),
-  #galeria figure:nth-of-type(5),
-  #galeria figure:nth-of-type(6),
-  #galeria figure:nth-of-type(7),
-  #galeria figure:nth-of-type(8),
-  #galeria figure:nth-of-type(9) {
+  #galeria figure:nth-of-type(n) {
     grid-column: span 1;
+  }
+  /* Las 9 fotos del edificio en 2 columnas dejarían un hueco al final:
+     la primera ocupa todo el ancho. Usamos 1 / -1 y no span 2 porque
+     en celu el grid tiene 1 sola columna, y span 2 inventaría una
+     segunda columna fantasma que rompe todo. */
+  #galeria figure:nth-of-type(9) {
+    grid-column: 1 / -1;
   }
 
   #zonas-comunes ul {
