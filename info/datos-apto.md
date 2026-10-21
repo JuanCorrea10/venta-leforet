@@ -60,7 +60,8 @@
 - `fachada-arboles.jpeg` — foto real del edificio terminado (oct 2026) — es la del hero y la del preview de WhatsApp
 - `fachada-torre.jpeg` — torre completa vista desde la calle (oct 2026)
 
-### Edificio hoy — zonas comunes y vistas (fotos reales, 21 oct 2026)
+### Galería — fotos reales del edificio (21 oct 2026)
+Son las que se muestran en la galería de la web.
 - `piscina-adultos.jpeg`, `piscina-ninos.jpeg`, `piscina-zona-verde.jpeg`
 - `lobby.jpeg`, `salon-social.jpeg`, `terraza-exterior.jpeg`
 - `vista-balcon-montana.jpeg`, `vista-balcon-ciudad.jpeg`
@@ -68,7 +69,8 @@
 ### Plano
 - `plano-distribucion.jpeg` — plano de distribución del apto
 
-### Interior (apto modelo del proyecto)
+### Interior (apto modelo del proyecto) — YA NO se muestran en la web
+Las reemplazaron las fotos reales (oct 2026). Quedan acá por si se quieren volver a usar.
 - `sala-principal-1.jpeg` — sala principal (sofás beige)
 - `sala-principal-2.jpeg` — sala principal (otro ángulo)
 - `comedor.jpeg` — comedor
