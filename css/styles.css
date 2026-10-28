@@ -763,6 +763,16 @@ body > header > p:last-child {
               filter 0.7s var(--ease-out-quart);
 }
 
+/*
+  Las fotos de las vistas son verticales y la tarjeta es horizontal:
+  el navegador tiene que recortar arriba y abajo. object-position
+  elige QUÉ franja mostrar: "center 30%" = un poco más arriba del
+  medio. Así se ven las montañas y la ciudad, y no tanto el piso
+  y la baranda del balcón.
+*/
+.vista-mountain .vista-scene img { object-position: center 30%; }
+.vista-city .vista-scene img     { object-position: center 40%; }
+
 /* Sutil zoom-in al hover (en la card padre) */
 .vista-card:hover .vista-scene img {
   transform: scale(1.04);

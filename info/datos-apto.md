@@ -58,19 +58,22 @@
 ### Fachada / exterior
 - `fachada-render.png` — render oficial del edificio
 - `fachada-arboles.jpeg` — foto real del edificio terminado (oct 2026) — es la del hero y la del preview de WhatsApp
-- `fachada-torre.jpeg` — torre completa vista desde la calle (oct 2026)
+- `fachada-torre.jpeg` — torre completa vista desde la calle (oct 2026) — última foto de la galería
 
-### Galería — fotos reales del edificio (21 oct 2026)
-Son las que se muestran en la galería de la web.
+### Vistas desde el balcón del 1605 (21 oct 2026)
+Se muestran en la sección "El privilegio de vivir en esquina".
+- `vista-balcon-montana.jpeg` — Norte, zona social, cordillera
+- `vista-balcon-ciudad.jpeg` — Este, habitaciones, sector El Vergel
+
+### Zonas comunes (fotos reales, 21 oct 2026) — NO se muestran en la web
+La abuela prefirió dejar el apto modelo en la galería. Quedan acá por si se quieren usar.
 - `piscina-adultos.jpeg`, `piscina-ninos.jpeg`, `piscina-zona-verde.jpeg`
 - `lobby.jpeg`, `salon-social.jpeg`, `terraza-exterior.jpeg`
-- `vista-balcon-montana.jpeg`, `vista-balcon-ciudad.jpeg`
 
 ### Plano
 - `plano-distribucion.jpeg` — plano de distribución del apto
 
-### Interior (apto modelo del proyecto) — YA NO se muestran en la web
-Las reemplazaron las fotos reales (oct 2026). Quedan acá por si se quieren volver a usar.
+### Interior (apto modelo del proyecto) — se muestran en la galería
 - `sala-principal-1.jpeg` — sala principal (sofás beige)
 - `sala-principal-2.jpeg` — sala principal (otro ángulo)
 - `comedor.jpeg` — comedor
